@@ -1,95 +1,86 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { Box, Text } from "zmp-ui";
-import { TiShoppingCart } from "react-icons/ti";
+import { IoCartSharp } from "react-icons/io5";
 import "../../css/detailhome/swiper/swiper-bundle.min.css";
-
 const categories = [
   {
     id: 1,
-    name: "Thịt heo xay",
-    image: "/images/product/flesh-1.jpg",
-    price: "20.000",
+    name: "iPhone 13 ProMax",
+    image: "/images/product/iphone-13.jpg",
+    price: "13.990.000",
   },
   {
     id: 2,
-    name: "Bẹ sườn non",
-    image: "/images/product/flesh-2.jpg",
-    price: "342.000",
+    name: "iPhone 15 Pro Max 256 GB",
+    image: "/images/product/iphone_15_pro_max.png",
+    price: "29.490.000",
   },
   {
     id: 3,
-    name: "Tôm thẻ Minh Phú",
-    image: "/images/product/seafood-1.jpg",
-    price: "678.000",
+    name: "iPhone 11 128 GB",
+    image: "/images/product/iphone_11.jpg",
+    price: "10.190.000",
   },
   {
     id: 4,
-    name: "Gà H'Mông nguyên con",
-    image: "/images/product/flesh-3.jpg",
-    price: "780.000",
-  },
-  {
-    id: 5,
-    name: "Mực nang Phú Quốc",
-    image: "/images/product/seafood-2.jpg",
-    price: "342.000",
-  },
-  {
-    id: 6,
-    name: "Thịt vụn bò",
-    image: "/images/product/flesh-4.jpg",
-    price: "120.000",
-  },
-  {
-    id: 7,
-    name: "Hàu sashiml",
-    image: "/images/product/seafood-3.jpg",
-    price: "60.000",
-  },
-  {
-    id: 8,
-    name: "Cá Basa cắt lát",
-    image: "/images/product/flesh-5.jpg",
-    price: "48.000",
-  },
-  {
-    id: 9,
-    name: "Mực nút",
-    image: "/images/product/seafood-4.jpg",
-    price: "230.000",
-  },
-  {
-    id: 10,
-    name: "Mực ống",
-    image: "/images/product/seafood-5.jpg",
-    price: "206.000",
+    name: "iPhone 14 Pluslus 512 GB",
+    image: "/images/product/iphone_14_pluspng.png",
+    price: "24.990.000",
   },
 ];
 
 const CategoryProduct = () => {
+  const [timeRemaining, setTimeRemaining] = useState(3600); // initial time in seconds (1 hour)
 
-  const navigate =  useNavigate();
-  
-  const handleDetailProduct = () => {
-    navigate("/detailProduct");
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeRemaining((prevTime) => {
+        if (prevTime <= 0) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    return { hours, minutes, secs };
   };
+
+  const { hours, minutes, secs } = formatTime(timeRemaining);
   return (
     <Box className="product-today">
-      <div className="icon-product-today"><TiShoppingCart/></div>
-      <Text.Title size="small" className="title-product">
-        Sản phẩm hôm nay
-      </Text.Title>
+      <Box className="header-slider-category mb-4">
+        <div className="infomation-sale">
+          <div className="icon-product-today">
+            <IoCartSharp />
+          </div>
+          <Text.Title size="small" className="title-product">
+            Mega Sale 50%
+          </Text.Title>
+        </div>
+        <div className="countdown-timer">
+          <div>{String(hours).padStart(2, "0")}</div>
+          <div>{String(minutes).padStart(2, "0")}</div>
+          <div>{String(secs).padStart(2, "0")}</div>
+        </div>
+      </Box>
       <Box mt={2} className="category-product">
-        <Box className="slider-category  p-4">
+        <Box className="slider-category p-4">
           {categories.map((category) => (
             <div
               key={category.id}
               className="custom-slider-item flex flex-col space-y-2 items-center category-item"
-              onClick={handleDetailProduct}
             >
               <img
-                className=" custom-border-image"
+                className="custom-border-image"
                 src={category.image}
                 alt={category.name}
               />
@@ -100,7 +91,7 @@ const CategoryProduct = () => {
                     : category.name}
                 </span>
                 <span className="price-product-today">{category.price} đ</span>
-              </Text> 
+              </Text>
             </div>
           ))}
         </Box>

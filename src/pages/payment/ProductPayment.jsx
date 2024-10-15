@@ -27,7 +27,7 @@ const ProductPayment = ({ cartData }) => {
           </Box>
           <Box className="total-item-payment">
             <Text className="quantity-product-item">x{item.quantity}</Text>
-            <Text className="cart-item-price">{item.price} đ</Text>
+            <Text className="cart-item-price">{item.price.toLocaleString("vi-VN")} đ</Text>
           </Box>
         </Box>
       )) : <Text>Không có sản phẩm nào trong giỏ hàng</Text>}

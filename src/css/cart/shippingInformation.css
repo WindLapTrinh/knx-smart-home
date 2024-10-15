@@ -35,7 +35,7 @@
 .title-date-cart {
   font-size: 14px;
   font-weight: 500;
-  color: #00b815;
+  color: #ffa53d;
 }
 
 .item-description {
@@ -51,15 +51,4 @@
   padding: 10px;
   color: #00b815;
   font-weight: 500;
-}
-.header-cart-product {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.icon-header-cart {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
 }

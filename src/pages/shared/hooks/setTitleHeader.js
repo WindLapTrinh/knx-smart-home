@@ -1,23 +1,23 @@
 import { useEffect } from 'react';
 import { configAppView } from "zmp-sdk/apis";
 
-const SetTitleHeader = ({ title, headerColor, statusBarColor, headerTextColor }) => {
+const SetTitleHeader = ({ title, headerColor, statusBarColor, headerTextColor, leftButton }) => {
   useEffect(() => {
     configAppView({
-      headerColor: headerColor || "#00b815",
-      statusBarColor: statusBarColor || "#00b815",
+      headerColor: headerColor || "#ffa53d",
+      statusBarColor: statusBarColor || "#ffa53d",
       headerTextColor: headerTextColor || "white",
       hideAndroidBottomNavigationBar: true,
       hideIOSSafeAreaBottom: true,
       actionBar: {
-        title: title || "SLK Makert",
-        leftButton: "back",
+        title: title || "Wind Lập Trình",
+        leftButton: leftButton ||"back",
       },
       success: (res) => {
         console.log("Gọi thành công");
       },
       fail: (error) => {
-        console.log(error);
+        console.log(error); 
       },
     });
   }, [title, headerColor, statusBarColor, headerTextColor]);

@@ -36,7 +36,7 @@ const SheetCart = ({ product, visible, onClose, onAddToCart, onPayment }) => {
             {product.name}
           </Text>
           <Text>
-            <span className="sheet-price-product">{product.price} đ</span>
+            <span className="sheet-price-product">{product.price.toLocaleString("vi-VN")} đ</span>
           </Text>
         </Box>
         <Box

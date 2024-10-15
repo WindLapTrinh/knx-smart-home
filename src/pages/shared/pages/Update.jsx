@@ -24,7 +24,7 @@ const UpdatePage = () => {
           Chức năng đang phát triển, về trang chủ!
         </Text>
         <Button className="btn-home-update" onClick={handleHome}>
-          Home
+          Trang chủ
         </Button>
       </Box>
     </Box>

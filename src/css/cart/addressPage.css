@@ -35,14 +35,17 @@
   }
   
   .save-button {
-    background-color: #00b815;
+    background-color: #ffa53d;
     margin: 0 auto;
     display: flex;
   }
   .save-button:hover{
-    background-color: #00b815;
+    background-color: #ffa53d;
   }
   .icon-address{
     margin-right: 10px;
   }
-  
+  .zaui-sheet-content{
+    height: 400px;
+    text-align: center;
+  }

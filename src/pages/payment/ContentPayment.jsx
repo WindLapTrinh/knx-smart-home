@@ -5,7 +5,7 @@ import "../../css/payment/contentPayment.css";
 const ContentPayment = ({ cartData }) => {
   const calculateTotal = () => {
     return cartData.reduce(
-      (sum, item) => sum + parseInt(item.price.replace(/\./g, "")) * item.quantity,
+      (sum, item) => sum + item.price * item.quantity,
       0
     ).toLocaleString("vi-VN");
   };
@@ -33,7 +33,7 @@ const ContentPayment = ({ cartData }) => {
           <Text className="title-content-payment">Thành tiền:</Text>
         </Box>
         <Box className="value">
-          <Text>{(parseInt(calculateTotal().replace(/\./g, "")) + 300).toLocaleString("vi-VN")} đ</Text>
+          <Text>{calculateTotal()} đ</Text>
         </Box>
       </Box>
     </Box>

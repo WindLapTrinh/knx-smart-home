@@ -4,16 +4,16 @@ import SetTitleHeader from "@/pages/shared/hooks/setTitleHeader";
 import ShippingInfo from "./ShippingInfo";
 import InfomationPayment from "./InfomationPayment";
 import OrderProduct from "./OrderProduct";
-import CustomBottomNavigation from "@/components/layout/CustomBottomNavigation";
+import CustomBottomNavigation from "../shared/components/CustomBottomNavigation";
 import InfomationVoucher from "./InfomationVoucher";
+import OrderCart from "../payment/OrderCart";
+import CustomHeader from "../shared/pages/CustomHeader";
+
 import { useCart } from "../shared/common/cart/CartContext";
 import "../../css/cart/homeCart.css";
 import "../../css/cart/shippingInformation.css";
 
 const HomeCart = () => {
-  SetTitleHeader({
-    title: "Giỏ hàng của bạn",
-  });
   const { cart, removeItemFromCart } = useCart();
   const [items, setItems] = useState(cart);
   useEffect(() => {
@@ -21,10 +21,13 @@ const HomeCart = () => {
   }, [cart]);
 
   const handleQuantityChange = (id, change) => {
-    setItems(
-      items.map((item) =>
+    setItems((prevItems) =>
+      prevItems.map((item) =>
         item.id === id
-          ? { ...item, quantity: Math.max(item.quantity + change, 1) }
+          ? {
+              ...item,
+              quantity: Math.max(item.quantity + change, 1),
+            }
           : item
       )
     );
@@ -35,20 +38,30 @@ const HomeCart = () => {
   };
 
   return (
-    <Box className="cart-page" p={4}>
-      <Box className="sum-cart-page">
-        <Box className="cart-items">
-          <Box className="header-cart-product">
-            <img className="icon-header-cart" src="/images/icon/cart.jpg" />
-            <Text className="section-title" size="large" bold mb={3}>
-              Sản phẩm đặt mua
-            </Text>
-          </Box>
+    <Box>
+      <CustomHeader title={"Giỏ hàng"} />
+      <Box className="cart-page" p={4}>
+        {items.length != "" ? (
+          <Box>
+            <Box className="sum-cart-page">
+              <Box className="cart-items">
+                <Box className="header-cart-product">
+                  <img
+                    className="icon-header-cart"
+                    src="/images/icon/cart.jpg"
+                  />
+                  <Text className="section-title" size="large" bold mb={3}>
+                    Sản phẩm đặt mua
+                  </Text>
+                </Box>
 
-          {items != "" 
-                  ? items.map((item) => (
+                {items != "" ? (
+                  items.map((item) => (
                     <Box key={item.id} className="index-cart-item">
-                      <Box className="delete-item-cart" onClick={() => handleDeleteProduct(item.id)}>
+                      <Box
+                        className="delete-item-cart"
+                        onClick={() => handleDeleteProduct(item.id)}
+                      >
                         <Icon className="icon-delete-item" icon="zi-close" />
                       </Box>
                       <Box className="cart-item" mt={2}>
@@ -58,7 +71,7 @@ const HomeCart = () => {
                         <Box className="cart-item-info">
                           <Text className="cart-item-name">{item.name}</Text>
                           <Text className="cart-item-price">
-                            {item.price.toLocaleString()} đ
+                            {item.price.toLocaleString("vi-VN")} đ
                           </Text>
                         </Box>
                       </Box>
@@ -82,19 +95,26 @@ const HomeCart = () => {
                           +
                         </a>
                       </Box>
-                    </Box>)) 
-                  : <Box className="text-cart">
-                      <Text> Bạn chưa có sản phẩm nào trong giỏ hàng!</Text>
-                    </Box>}
-        </Box>
-        <ShippingInfo />
-        <InfomationVoucher />
-        <InfomationPayment />
+                    </Box>
+                  ))
+                ) : (
+                  <Box className="text-cart">
+                    <Text> Bạn chưa có sản phẩm nào trong giỏ hàng!</Text>
+                  </Box>
+                )}
+              </Box>
+              <ShippingInfo />
+              <InfomationVoucher />
+              <InfomationPayment />
+            </Box>
+            <OrderProduct items={items} />
+            <CustomBottomNavigation />
+          </Box>
+        ) : (
+          <OrderCart />
+        )}
       </Box>
-      <OrderProduct />
-      <CustomBottomNavigation />
     </Box>
   );
 };
-
 export default HomeCart;

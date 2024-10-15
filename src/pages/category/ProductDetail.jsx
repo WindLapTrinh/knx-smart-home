@@ -12,7 +12,7 @@ import {
 } from "zmp-ui";
 import ProductList from "../home/ProductList.jsx";
 import SliderCategory from "./SliderCategory.jsx";
-import CustomBottomNavigation from "../../components/layout/CustomBottomNavigation.jsx";
+import CustomBottomNavigation from "../shared/components/CustomBottomNavigation.jsx";
 import SheetCart from "../shared/common/cart/SheetCart"; 
 
 import { BsShop } from "react-icons/bs";
@@ -20,39 +20,38 @@ import "../../css/detailhome/product/productDetail.css";
 
 const product = {
   id: 1,
-  name: "Rau cải bẹ",
-  image: "/images/product/veg-2.jpg",
-  price: "20.000",
+  name: "iPhone 15 ProMax 256 GB",
+  image: "/images/product/iphone_15_pro_max.png",
+  price: 24490000,
   description:
-    "Dầu ăn ngày nay ngày càng đa dạng phù hợp hơn trong từng nhu cầu sử dụng. Có thể sử dụng được.",
+    "iPhone luôn là sự lừa chọn hàng đầu của giới trẻ ngày nay đặt biệt là thế hệ GenZ, iPhone mang tính sang chảnh, thiết kế tinh sảo, và độ bảo mật cao.",
   relatedProducts: [
     {
       id: 2,
-      name: "Xà lách thủy tinh",
-      image: "/images/product/veg-1.jpg",
-      price: "20.000",
+      name: "iPhone 11 128 GB",
+      image: "/images/product/iphone_11.jpg",
+      price: 10190000,
     },
     {
       id: 3,
-      name: "Cải bẹ xanh",
-      image: "/images/product/veg-2.jpg",
-      price: "15.000",
+      name: "iPhone 14 Pluslus 512 GB",
+      image: "/images/product/iphone_14_pluspng.png",
+      price: 24990000,
     },
     {
       id: 4,
-      name: "Bắp cải trắng",
-      image: "/images/product/veg-3.jpg",
-      price: "50.000",
+      name: "iPhone 13 ProMax",
+      image: "/images/product/iphone-13.jpg",
+      price: 13990000,
     },
     {
       id: 5,
-      name: "Rau mồng tơi",
-      image: "/images/product/veg-4.jpg",
-      price: "10.000",
+      name: "iPhone 15 ProMax 256 GB",
+      image: "/images/product/iphone_15_pro_max.png",
+      price: 24490000,
     },
   ],
 };
-
 const ProductDetail = () => {
   const navigate = useNavigate();
   const [actionSheetVisible, setActionSheetVisible] = useState(false);
@@ -76,7 +75,7 @@ const ProductDetail = () => {
       <Box className="product-detail">
         <Box className="product-info">
           <Text className="product-name">{product.name}</Text>
-          <Text className="product-price">{product.price} đ</Text>
+          <Text className="product-price">{product.price.toLocaleString("vi-VN")} đ</Text>
           <Text className="product-description">{product.description}</Text>
           <Button className="add-to-cart-button" onClick={handleAddCart}>
             Thêm vào giỏ
@@ -97,7 +96,7 @@ const ProductDetail = () => {
                   {relatedProduct.name}
                 </Text>
                 <Text className="related-product-price">
-                  {relatedProduct.price} đ
+                  {relatedProduct.price.toLocaleString("vi-VN")} đ
                 </Text>
               </Box>
             ))}

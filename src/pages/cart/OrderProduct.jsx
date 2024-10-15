@@ -1,28 +1,21 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Text, Button } from "zmp-ui";
-import { useCart } from "../shared/common/cart/CartContext";
 import { paymentContext } from "../shared/common/payment/PaymentContext";
 import "../../css/cart/orderProduct.css";
 
-const OrderProduct = () => {
+const OrderProduct = ({ items }) => {
   const navigate = useNavigate();
-  const { cart } = useCart(); 
   const { setPaymentData } = paymentContext();
-  const calculateTotal = () => {
-    const total = cart.reduce((sum, item) => sum + parseInt(item.price.replace(/\./g, "")) * item.quantity,
-    0
-  ).toLocaleString("vi-VN");
-    return total;
-  };
-  
+
+  const totalPrice = items.reduce((total, item) => {
+    return total + item.price * item.quantity;
+  }, 0).toLocaleString("vi-VN");
 
   const handleCheckout = () => {
-    setPaymentData(cart);
-    // Xử lý thanh toán
+    setPaymentData(items); // Pass the items instead of cart
     navigate("/homePayment");
-
-    console.log(cart);
+    console.log(items);
   };
 
   return (
@@ -32,7 +25,7 @@ const OrderProduct = () => {
           <Text size="medium" bold>
             Tổng cộng:
           </Text>
-          <Text className="calculate-total" size="medium">{calculateTotal()} đ</Text>
+          <Text className="calculate-total" size="medium">{totalPrice.toLocaleString("vi-VN")} đ</Text>
         </Box>
         <Button className="btn-payment" onClick={handleCheckout}>
           Thanh toán

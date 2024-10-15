@@ -13,10 +13,10 @@
 
 .cart-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex: 1;
 }
- 
+
 .cart-item-image {
   flex-shrink: 0;
   width: 100px;
@@ -44,7 +44,7 @@
 .cart-item-price {
   font-size: 14px;
   margin-bottom: 4px;
-  color: #00b815;
+  color: #91857c;
   font-weight: 500;
 }
 
@@ -52,7 +52,7 @@
   display: flex;
   align-items: center;
   font-size: 12px;
-  color: #00b815;
+  color: #e02a1a;
   font-weight: bold;
   position: absolute;
   bottom: 12px; /* Adjust distance from bottom */
@@ -60,8 +60,8 @@
 }
 
 .quantity-btn {
-  background-color: #ddd;
-  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  border: 1px solid #f5f5f5;
   border-radius: 4px;
   padding: 5px 10px;
   cursor: pointer;
@@ -70,8 +70,8 @@
 }
 
 .quantity-btn:hover {
-  background-color: #bae9bc;
-  border: 1px solid #bae9bc;
+  background-color: #ffd1d1;
+  border: 1px solid #ffd1d1;
 }
 
 .quantity-input {
@@ -96,6 +96,18 @@
 
 .delete-item-cart .zi-close {
   font-size: 20px; /* Adjust size as needed */
+}
+
+.header-cart-product {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-header-cart {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
 .sum-cart-page {

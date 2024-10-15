@@ -19,16 +19,16 @@ const CategoryByProduct = ({ categories, gotoCategory }) => {
               <Tabs.Tab key="tab1" label="Vegetables">
                 <ProductList />
               </Tabs.Tab>
-              <Tabs.Tab key="tab2" label="Water">
+              <Tabs.Tab key="tab2" label="Điện thoại">
                 <ProductList />
               </Tabs.Tab>
-              <Tabs.Tab key="tab3" label="Egg-Meat">
+              <Tabs.Tab key="tab3" label="Máy tính">
                 <ProductList />
               </Tabs.Tab>
-              <Tabs.Tab key="tab4" label="Spice">
+              <Tabs.Tab key="tab4" label="Đồng hồ">
                 <ProductList />
               </Tabs.Tab>
-              <Tabs.Tab key="tab5" label="Processed Foods">
+              <Tabs.Tab key="tab5" label="Tablet">
                 <ProductList />
               </Tabs.Tab>
             </Tabs>

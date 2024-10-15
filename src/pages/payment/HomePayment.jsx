@@ -10,6 +10,8 @@ import MethodPayment from "./MethodPayment.jsx";
 import InfoShipping from "./InfoShipping.jsx";
 import OrderCart from "./OrderCart.jsx";
 import ContactPayment from "./ContactPayment.jsx";
+import SatatusPayment from "./StatusPayment.jsx";
+
 
 import { paymentContext } from "../shared/common/payment/PaymentContext";
 import "../../css/payment/paymentDetail.css";
@@ -34,6 +36,7 @@ const HomePayment = () => {
                                 <MethodPayment />
                                 <InfoShipping />
                                 <ContactPayment/>
+                                <SatatusPayment/>
                               </Box>) 
                           : (<OrderCart/>)}
     </Box>

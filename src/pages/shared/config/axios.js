@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'http://ileader.cloud/api/',
+  baseURL: 'https://duong-dan/api',
   headers: {
     'Content-Type': 'application/json',
   },

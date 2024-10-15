@@ -1,18 +1,25 @@
+
 {
   "app": {
-    "title": "SLK Market",
-    "headerTitle": "SLK Market",
-    "headerColor": "#00b815",
-    "textColor": "white",
-    "statusBarColor": "#51fb13",
-    "leftButton": "back",
-    "statusBar": "normal",
-    "actionBarHidden": false,
+    "title": "Wind Shop",
+    "headerColor": "",
+    "textColor": "#ffffff",
+    "statusBarColor": "#ffa53d",
+    "leftButton": "none",
+    "statusBar": "transparent",
+    "selfControlLoading": false,
     "hideAndroidBottomNavigationBar": false,
-    "hideIOSSafeAreaBottom": false
+    "hideIOSSafeAreaBottom": false,
+    "actionBarHidden": true
   },
   "debug": false,
   "listCSS": [],
   "listSyncJS": [],
-  "listAsyncJS": []
+  "listAsyncJS": [],
+  "template": {
+    "primaryColor": "#006af5",
+    "prefixCurrencySymbol": false,
+    "currencySymbol": "đ",
+    "headerLogo": ""
+  }
 }

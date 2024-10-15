@@ -16,8 +16,8 @@ const ContactPayment = () => {
           </Text>
         </Box>
         <Box className="contact-shop" onClick={openChatScreen}>
-          <img className="image-zalo-pay" src="/images/icon/zalo-pay.jpg" />
-          <Text className="content-shop">Liên hệ với SLK Solutions</Text>
+          <img className="image-zalo-pay" src="/images/icon/zalo.jpg" />
+          <Text className="content-shop">Liên hệ với Tomo Order</Text>
         </Box>
       </Box>
     </Box>
