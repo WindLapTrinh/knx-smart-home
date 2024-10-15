@@ -15,7 +15,7 @@ const PurchaseHistory = () => {
 
   return (
     <Box>
-      <CustomHeader title={"Lịch sử đặt hàng"}/>
+      <CustomHeader title={"Lịch sử đặt hàng"} showBackIcon={true}/>
       <Box className="purchase-history">
         <Box className="history-container">
           <Box className="slider-history bg-white p-4">
