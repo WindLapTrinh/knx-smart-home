@@ -63,13 +63,8 @@ const CategoryProduct = () => {
             <IoCartSharp />
           </div>
           <Text.Title size="small" className="title-product">
-            Mega Sale 50%
+           Sản phẩm hôm nay
           </Text.Title>
-        </div>
-        <div className="countdown-timer">
-          <div>{String(hours).padStart(2, "0")}</div>
-          <div>{String(minutes).padStart(2, "0")}</div>
-          <div>{String(secs).padStart(2, "0")}</div>
         </div>
       </Box>
       <Box mt={2} className="category-product">

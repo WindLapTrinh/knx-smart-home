@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text } from "zmp-ui";
 import ProductItem from "@/pages/home/ProductItem";
-import SetTitleHeader from "@/pages/shared/hooks/setTitleHeader";
+import CustomHeader from "../shared/pages/CustomHeader";
 import "../../css/detailhome/product/listProduct.css";
 
 const sampleProducts = [
@@ -72,9 +72,6 @@ const sampleProducts = [
 ];
 
 const ProductList = () => {
-  SetTitleHeader({
-    title : "Danh sách sản phẩm",
-});
   // Nhóm sản phẩm theo danh mục
   const groupedProducts = sampleProducts.reduce((acc, product) => {
     if (!acc[product.category]) {
@@ -85,31 +82,42 @@ const ProductList = () => {
   }, {});
 
   return (
-    <Box className="list-product">
-      {Object.entries(groupedProducts).map(([category, products]) => (
-        <Box key={category} mt={4}>
-          <Box
-            className="title-category"
-            flex
-            flexDirection="row"
-            justifyContent="space-between"
-            alignItems="center"
-            mb={2}
-          >
-            <Text fontWeight="bold" className="title-category-product" fontSize="lg">
-              {category}
-            </Text>
-            <Text className="all-product" fontSize="sm" color="blue" cursor="pointer">
-              Tất cả
-            </Text>
+    <Box>
+      <Box className="list-product">
+        {Object.entries(groupedProducts).map(([category, products]) => (
+          <Box key={category} mt={4}>
+            <Box
+              className="title-category"
+              flex
+              flexDirection="row"
+              justifyContent="space-between"
+              alignItems="center"
+              mb={2}
+            >
+              <Text
+                fontWeight="bold"
+                className="title-category-product"
+                fontSize="lg"
+              >
+                {category}
+              </Text>
+              <Text
+                className="all-product"
+                fontSize="sm"
+                color="blue"
+                cursor="pointer"
+              >
+                Tất cả
+              </Text>
+            </Box>
+            <Box className="grid grid-cols-2 gap-4">
+              {products.map((product) => (
+                <ProductItem key={product.id} product={product} />
+              ))}
+            </Box>
           </Box>
-          <Box className="grid grid-cols-2 gap-4">
-            {products.map((product) => (
-              <ProductItem key={product.id} product={product} />
-            ))}
-          </Box>
-        </Box>
-      ))}
+        ))}
+      </Box>
     </Box>
   );
 };

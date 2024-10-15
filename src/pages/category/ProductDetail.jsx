@@ -13,7 +13,8 @@ import {
 import ProductList from "../home/ProductList.jsx";
 import SliderCategory from "./SliderCategory.jsx";
 import CustomBottomNavigation from "../shared/components/CustomBottomNavigation.jsx";
-import SheetCart from "../shared/common/cart/SheetCart"; 
+import CustomHeader from "../shared/pages/CustomHeader.jsx";
+import SheetCart from "../shared/common/cart/SheetCart";
 
 import { BsShop } from "react-icons/bs";
 import "../../css/detailhome/product/productDetail.css";
@@ -70,52 +71,59 @@ const ProductDetail = () => {
   };
 
   return (
-    <Box className="container-product">
-      <SliderCategory />
-      <Box className="product-detail">
-        <Box className="product-info">
-          <Text className="product-name">{product.name}</Text>
-          <Text className="product-price">{product.price.toLocaleString("vi-VN")} đ</Text>
-          <Text className="product-description">{product.description}</Text>
-          <Button className="add-to-cart-button" onClick={handleAddCart}>
-            Thêm vào giỏ
-          </Button>
-        </Box>
-        <Box className="related-products">
-          <div className="icon-related-products"><BsShop/></div>
-          <Text className="related-products-title">Sản phẩm liên quan</Text>
-          <Box className="related-products-list">
-            {product.relatedProducts.map((relatedProduct) => (
-              <Box key={relatedProduct.id} className="related-product-item">
-                <img
-                  className="related-product-image"
-                  src={relatedProduct.image}
-                  alt={relatedProduct.name}
-                />
-                <Text className="related-product-name">
-                  {relatedProduct.name}
-                </Text>
-                <Text className="related-product-price">
-                  {relatedProduct.price.toLocaleString("vi-VN")} đ
-                </Text>
-              </Box>
-            ))}
+    <Box>
+      <CustomHeader title={"Ổ áp tường thông minh"} showBackIcon={true}/>
+      <Box className="container-product">
+        <SliderCategory />
+        <Box className="product-detail">
+          <Box className="product-info">
+            <Text className="product-name">{product.name}</Text>
+            <Text className="product-price">
+              {product.price.toLocaleString("vi-VN")} đ
+            </Text>
+            <Text className="product-description">{product.description}</Text>
+            <Button className="add-to-cart-button" onClick={handleAddCart}>
+              Thêm vào giỏ
+            </Button>
+          </Box>
+          <Box className="related-products">
+            <div className="icon-related-products">
+              <BsShop />
+            </div>
+            <Text className="related-products-title">Sản phẩm liên quan</Text>
+            <Box className="related-products-list">
+              {product.relatedProducts.map((relatedProduct) => (
+                <Box key={relatedProduct.id} className="related-product-item">
+                  <img
+                    className="related-product-image"
+                    src={relatedProduct.image}
+                    alt={relatedProduct.name}
+                  />
+                  <Text className="related-product-name">
+                    {relatedProduct.name}
+                  </Text>
+                  <Text className="related-product-price">
+                    {relatedProduct.price.toLocaleString("vi-VN")} đ
+                  </Text>
+                </Box>
+              ))}
+            </Box>
           </Box>
         </Box>
+        <Box mt={2}>
+          <ProductList />
+        </Box>
+        <Box className="navigate-product">
+          <CustomBottomNavigation />
+        </Box>
+        <SheetCart
+          product={product}
+          visible={actionSheetVisible}
+          onClose={() => setActionSheetVisible(false)}
+          onAddToCart={handleAddToCart}
+          onPayment={handlePayment}
+        />
       </Box>
-      <Box mt={2}>
-        <ProductList />
-      </Box>
-      <Box className="navigate-product">
-        <CustomBottomNavigation />
-      </Box>
-      <SheetCart
-        product={product}
-        visible={actionSheetVisible}
-        onClose={() => setActionSheetVisible(false)}
-        onAddToCart={handleAddToCart}
-        onPayment={handlePayment}
-      />
     </Box>
   );
 };

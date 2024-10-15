@@ -1,23 +1,23 @@
-
 {
   "app": {
-    "title": "Wind Shop",
+    "title": "Wind Lập Trình",
     "headerColor": "",
-    "textColor": "#ffffff",
-    "statusBarColor": "#ffa53d",
+    "textColor": "white",
+    "statusBarColor": "#27871C",
     "leftButton": "none",
-    "statusBar": "transparent",
+    "statusBar": "normal",
     "selfControlLoading": false,
     "hideAndroidBottomNavigationBar": false,
     "hideIOSSafeAreaBottom": false,
-    "actionBarHidden": true
+    "actionBarHidden": true,
+    "textAlign": "left"
   },
   "debug": false,
   "listCSS": [],
   "listSyncJS": [],
   "listAsyncJS": [],
   "template": {
-    "primaryColor": "#006af5",
+    "primaryColor": "#028090",
     "prefixCurrencySymbol": false,
     "currencySymbol": "đ",
     "headerLogo": ""

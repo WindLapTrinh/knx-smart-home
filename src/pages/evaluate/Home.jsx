@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { Box, Tabs } from "zmp-ui";
 import CustomBottomNavigation from "../shared/components/CustomBottomNavigation";
-import SetTitleHeader from "@/pages/shared/hooks/setTitleHeader";
 import ProductNotEvaluate from "./ProductNotEvaluate";
 import "../../css/cart/prurchaseHistory.css";
 
 const Home = () => {
-  SetTitleHeader({
-    title: "Đánh giá của tôi"
-  })
+ 
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   const handleItemClick = (index) => {
@@ -16,7 +13,9 @@ const Home = () => {
   };
 
   return (
-    <Box className="page-evaluate">
+   <Box>
+    <CustomStateSet title={"Đánh giá của tôi"}/>
+     <Box className="page-evaluate">
       <Box className="history-container">
         <Box className="bg-white p-4">
           <div className="tabs-wrapper">
@@ -34,6 +33,7 @@ const Home = () => {
         <CustomBottomNavigation/>
       </Box>
     </Box>
+   </Box>
   );
 };
 

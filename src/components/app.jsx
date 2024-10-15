@@ -8,11 +8,10 @@ import Home from "../pages/home/Home.jsx";
 import CategoryByProduct from "../pages/category/CategoryByProduct.jsx";
 import ProductDetail from "../pages/category/ProductDetail.jsx";
 import NotificationPage from "../pages/notify/NotificationPage.jsx";
-import User from "../pages/user/Home.jsx";
+import User from "../pages/user/UserPage.jsx";
 import PurchaseHistory from "../pages/cart/PurchaseHistory.jsx";
 import HomeCart from "../pages/cart/HomeCart.jsx";
 import UpdatePage from "../pages/shared/pages/Update.jsx";
-import Language from "../pages/shared/pages/Language.jsx";
 import AddressPage from "../pages/cart/AddressCart.jsx";
 import ListAddress from "../pages/cart/ListAddress.jsx";
 import HomePayment from "../pages/payment/HomePayment.jsx";
@@ -31,8 +30,8 @@ const MyApp = () => {
               <App>
                 <SnackbarProvider>
                   <ZMPRouter>
-                    <AnimationRoutes>
-                      <Route path="/" element={<Home setTasks={setTasks} tasks={tasks} />} />
+                    <Routes>
+                    <Route path="/" element={<Home setTasks={setTasks} tasks={tasks} />} />
                       <Route path="/categoryByProduct" element={<CategoryByProduct setTasks={setTasks} tasks={tasks} />} />
                       <Route path="/detailProduct" element={<ProductDetail setTasks={setTasks} tasks={tasks} />} />
                       <Route path="/notificationPage" element={<NotificationPage setTasks={setTasks} tasks={tasks} />} />
@@ -44,8 +43,8 @@ const MyApp = () => {
                       <Route path="/homePayment" element={<HomePayment setTasks={setTasks} tasks={tasks} />} />
                       <Route path="/listAddress" element={<ListAddress setTasks={setTasks} tasks={tasks} />} />
                       <Route path="/evaluate" element={<Evaluate setTasks={setTasks} tasks={tasks} />} />
-                    
-                    </AnimationRoutes>
+
+                    </Routes>
                   </ZMPRouter>
                 </SnackbarProvider>
               </App>

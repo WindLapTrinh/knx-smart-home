@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box } from "zmp-ui";
-import { BsShieldFillCheck } from "react-icons/bs";
+import { BsPatchCheckFill } from "react-icons/bs";
 import { FaTruck } from "react-icons/fa";
 import { GoClockFill } from "react-icons/go";
 import { BsStripe } from "react-icons/bs";
@@ -33,8 +33,8 @@ const Introduce = () => {
   return (
     <Box className="introduce-home">
       <div className="fouder">
-        <BsShieldFillCheck />
-        <span>Chất lượng đảm bảo bởi SLK</span>
+        <BsPatchCheckFill />
+        <span>Chất lượng bởi <b>SLK</b></span>
       </div>
       <div className="free-ship">
         <span>{content.icon}</span>

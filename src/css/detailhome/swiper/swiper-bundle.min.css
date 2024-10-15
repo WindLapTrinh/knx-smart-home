@@ -2,7 +2,7 @@
   padding: 0px 10px 5px 10px;
 } */
 .category-product {
-    background: rgb(254 186 85);
+    /* background: rgb(254 186 85); */
     color: #333;
     border-radius: 5px;
     height: 86px;
@@ -47,7 +47,7 @@
     display: block;
   }
   .price-product-today{
-    color: #ffa53d;
+    color: #27871C;
     font-weight: bold;
   } 
 .custom-text-gray {
