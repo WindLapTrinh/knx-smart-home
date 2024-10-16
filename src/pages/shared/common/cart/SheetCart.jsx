@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Box, Text, Button, Input, Sheet } from "zmp-ui";
 import { useCart } from "./CartContext";
+import useToast from "../../hooks/useToast";
 
 const SheetCart = ({ product, visible, onClose, onAddToCart, onPayment }) => {
   const [quantity, setQuantity] = useState(1);
   const { addItemToCart } = useCart();
+  const [toastVisible, setToastVisible] = useState(false);
+  const openToast = useToast();
 
   const handleQuantityChange = (delta) => {
     setQuantity(prevQuantity => Math.max(1, prevQuantity + delta));
@@ -13,11 +16,15 @@ const SheetCart = ({ product, visible, onClose, onAddToCart, onPayment }) => {
   const handleAddCart = () => {
     addItemToCart({ ...product, quantity });
     onAddToCart();
+    setToastVisible(true);
+    openToast("Đã thêm sản phẩm vào giỏ hàng");
   };
 
   const handlePaymentProduct = () => {
     addItemToCart({ ...product, quantity });
     onPayment();
+    setToastVisible(true);
+    openToast("Đã thêm sản phẩm vào giỏ hàng");
   };
 
   return (

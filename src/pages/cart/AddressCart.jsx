@@ -4,7 +4,9 @@ import { Box, Text, Input, Button, Checkbox, Icon, Select } from "zmp-ui";
 import useUser from "../shared/hooks/useUser";
 import usePhoneNumber from "../shared/hooks/usePhoneNumber";
 import { useAddress } from "../shared/common/cart/AddressContext"; // Import the hook
+import CustomHeader from "../shared/pages/CustomHeader";
 import "../../css/cart/addressPage.css";
+import { IoEllipseSharp } from "react-icons/io5";
 
 const { Option } = Select;
 
@@ -131,15 +133,15 @@ const AddressPage = () => {
 
   const handleSubmitAddress = () => {
     let updatedAddresses = [...address];
-  
+
     // If the new address is marked as default, set all others to non-default
     if (isDefault) {
-      updatedAddresses = updatedAddresses.map(addr => ({
+      updatedAddresses = updatedAddresses.map((addr) => ({
         ...addr,
         isDefault: false,
       }));
     }
-  
+
     const newAddress = {
       id: new Date().getTime(),
       name: userInfo.name || "",
@@ -150,18 +152,17 @@ const AddressPage = () => {
       street: streetName,
       isDefault,
     };
-  
+
     // Add the new address to the updated addresses list
     updatedAddresses.push(newAddress);
-  
+
     // Update the state and save to local storage
     setAddress(updatedAddresses);
     localStorage.setItem("addresses", JSON.stringify(updatedAddresses));
-  
+
     // Navigate to the list address page
     navigate("/listAddress");
   };
-  
 
   const getCityNameById = (id) => {
     const city = cities.find((city) => city.id === id);
@@ -178,115 +179,127 @@ const AddressPage = () => {
     return ward ? ward.name : "";
   };
 
+  //on back list 
+  const handleOnBackList = () => {
+    if(phoneNumber){
+      navigate("/homeCart");
+    }else{
+      navigate(-1);
+    }
+  }
+
   if (userLoading || phoneLoading) return <div>Loading...</div>;
   if (userError) return <div>Error loading user info: {userError.message}</div>;
   if (phoneError)
     return <div>Error loading phone number: {phoneError.message}</div>;
 
   return (
-    <Box className="address-page" p={4}>
-      <Box className="contact-info" mb={4}>
-        <Text className="section-title" size="large" bold mb={2}>
-          Liên hệ
-        </Text>
-        {userInfo && (
-          <Box>
-            <Input
-              placeholder="Họ và tên"
-              size="large"
-              className="input-field"
-              value={userInfo.name || ""}
-              readOnly
-            />
-            <Input
-              placeholder="Số điện thoại"
-              size="large"
-              className="input-field"
-              value={phoneNumber || ""}
-              readOnly
-            />
-          </Box>
-        )}
-      </Box>
-      <Box className="address-info" mb={4}>
-        <Text className="section-title" size="large" bold mb={2}>
-          Địa chỉ
-        </Text>
-        <Select
-          placeholder={
-            selectedCity
-              ? getCityNameById(selectedCity)
-              : "Chọn tỉnh/ thành phố"
-          }
-          size="large"
-          className="city-select"
-          onChange={(value) => handleCityChange(value)}
-          closeOnSelect={true}
-        >
-          {cities.map((city) => (
-            <Option key={city.id} value={city.id}>
-              {city.name}
-            </Option>
-          ))}
-        </Select>
+    <Box>
+      <CustomHeader title={"Địa chỉ"} showBackIcon={true} onBackClick={handleOnBackList}/>
+      <Box className="address-page" p={4}>
+        <Box className="contact-info" mb={4}>
+          <Text className="section-title" size="large" bold mb={2}>
+            Liên hệ
+          </Text>
+          {userInfo && (
+            <Box>
+              <Input
+                placeholder="Họ và tên"
+                size="large"
+                className="input-field"
+                value={userInfo.name || ""}
+                readOnly
+              />
+              <Input
+                placeholder="Số điện thoại"
+                size="large"
+                className="input-field"
+                value={phoneNumber || ""}
+                readOnly
+              />
+            </Box>
+          )}
+        </Box>
+        <Box className="address-info" mb={4}>
+          <Text className="section-title" size="large" bold mb={2}>
+            Địa chỉ
+          </Text>
+          <Select
+            placeholder={
+              selectedCity
+                ? getCityNameById(selectedCity)
+                : "Chọn tỉnh/ thành phố"
+            }
+            size="large"
+            className="city-select"
+            onChange={(value) => handleCityChange(value)}
+            closeOnSelect={true}
+          >
+            {cities.map((city) => (
+              <Option key={city.id} value={city.id}>
+                {city.name}
+              </Option>
+            ))}
+          </Select>
 
-        <Select
-          placeholder={
-            selectedDistrict
-              ? getDistrictNameById(selectedDistrict)
-              : "Chọn quận/huyện"
-          }
-          size="large"
-          onChange={(value) => handleDistrictChange(value)}
-          disabled={!selectedCity}
-          closeOnSelect={true}
-          mb={2}
-        >
-          {districts.map((district) => (
-            <Option key={district.id} value={district.id}>
-              {district.name}
-            </Option>
-          ))}
-        </Select>
+          <Select
+            placeholder={
+              selectedDistrict
+                ? getDistrictNameById(selectedDistrict)
+                : "Chọn quận/huyện"
+            }
+            size="large"
+            onChange={(value) => handleDistrictChange(value)}
+            disabled={!selectedCity}
+            closeOnSelect={true}
+            mb={2}
+          >
+            {districts.map((district) => (
+              <Option key={district.id} value={district.id}>
+                {district.name}
+              </Option>
+            ))}
+          </Select>
 
-        <Select
-          placeholder={
-            selectedWard
-              ? getWardNameById(selectedWard)
-              : "Chọn phường/xã/thị trấn"
-          }
-          size="large"
-          onChange={(value) => handleWardChange(value)}
-          disabled={!selectedDistrict}
-          closeOnSelect={true}
-        >
-          {wards.map((ward) => (
-            <Option key={ward.id} value={ward.id}>
-              {ward.name}
-            </Option>
-          ))}
-        </Select>
+          <Select
+            placeholder={
+              selectedWard
+                ? getWardNameById(selectedWard)
+                : "Chọn phường/xã/thị trấn"
+            }
+            size="large"
+            onChange={(value) => handleWardChange(value)}
+            disabled={!selectedDistrict}
+            closeOnSelect={true}
+          >
+            {wards.map((ward) => (
+              <Option key={ward.id} value={ward.id}>
+                {ward.name}
+              </Option>
+            ))}
+          </Select>
 
-        <Input
-          placeholder="Tên đường"
-          size="large"
-          className="input-field"
-          value={streetName}
-          onChange={handleStreetNameChange}
-        />
+          <Input
+            placeholder="Tên đường"
+            size="large"
+            className="input-field"
+            value={streetName}
+            onChange={handleStreetNameChange}
+          />
+        </Box>
+        <Box className="default-address">
+          <Checkbox
+            checked={isDefault}
+            onChange={handleDefaultChange}
+            className="default-checkbox"
+          />
+          <Text className="default-text">Đặt làm địa chỉ mặc định</Text>
+        </Box>
+        <Button className="save-button" onClick={handleSubmitAddress}>
+          <Icon icon="zi-plus-circle" className="icon-address" />
+          <span>Thêm địa chỉ</span>
+        </Button>
       </Box>
-      <Box className="default-address">
-        <Checkbox
-          checked={isDefault}
-          onChange={handleDefaultChange}
-          className="default-checkbox"
-        />
-        <Text className="default-text">Đặt làm địa chỉ mặc định</Text>
-      </Box>
-      <Button className="save-button" onClick={handleSubmitAddress}>
-        <Icon icon="zi-plus-circle" className="icon-address" />
-        <span>Thêm địa chỉ</span>
-      </Button>
     </Box>
   );
 };

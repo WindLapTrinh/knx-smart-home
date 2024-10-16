@@ -8,6 +8,7 @@ const CustomHeader = ({
   imageUrl,
   imageAccount,
   showBackIcon = false,
+  onBackClick,
 }) => {
   return (
     <Box className="">
@@ -46,6 +47,7 @@ const CustomHeader = ({
             )}
           </Box>
         }
+        onBackClick = {onBackClick}
       />
     </Box>
   );

@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-
+import useToast from '../../hooks/useToast';
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [toastVisible, setToastVisible] = useState(false);
+  const openToast = useToast();
 
   useEffect(() => {
     const storedCart = localStorage.getItem('cart');
@@ -33,6 +35,8 @@ export const CartProvider = ({ children }) => {
   // delete cart item
   const removeItemFromCart = (id) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+    setToastVisible(true);
+    openToast("Đã xóa sản phẩm thành công");
   };
 
   //notify quanty item

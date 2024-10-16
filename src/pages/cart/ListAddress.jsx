@@ -4,6 +4,7 @@ import { Box, Text, Checkbox, Button, Icon } from "zmp-ui";
 import { useAddress } from "../shared/common/cart/AddressContext";
 import AddressCart from "./AddressCart.jsx";
 import CustomHeader from "../shared/pages/CustomHeader.jsx";
+import CustomBottomNavigation from "../shared/components/CustomBottomNavigation.jsx";
 import "../../css/cart/listAddress.css";
 
 const ListAddress = () => {
@@ -36,9 +37,17 @@ const ListAddress = () => {
     navigate("/addressCart");
   };
 
+  const handleOnBackList = () => {
+    if(address){
+      navigate("/homeCart");
+    }else{
+      navigate(-1);
+    }
+  }
+
   return (
     <Box>
-      <CustomHeader title={"Danh sách địa chỉ"}/>
+      <CustomHeader title={"Danh sách địa chỉ"} showBackIcon={true} onBackClick={handleOnBackList}/>
       <Box className="page-list-address">
         {address && Array.isArray(address) && address.length > 0 ? (
           <Box>
@@ -70,6 +79,7 @@ const ListAddress = () => {
           <AddressCart />
         )}
       </Box>
+      <CustomBottomNavigation/>
     </Box>
   );
 };
