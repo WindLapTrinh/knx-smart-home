@@ -60,7 +60,7 @@ const Home = (props) => {
   }
   return (
     <Box>
-      <CustomHeader title={"KNX Smart Home"} subtitle={"Chào mừng bạn đến với cửa hàng"} imageUrl={"./images/logo/logo-knx.png"}/>
+      <CustomHeader title={"KNX Smart Home"} subtitle={"Chào mừng bạn đến với cửa hàng"} imageUrl={"./images/logo/logo-knx.jpg"}/>
     <Page className="home">
  <Popup show={showPopup} onClose={handleClosePopup} />
       <Box className="header-home">
