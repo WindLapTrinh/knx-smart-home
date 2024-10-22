@@ -9,7 +9,7 @@ import "../../css/notify/notifyPage.css";
 const notifications = [
   {
     id: 1,
-    title: "Đơn hàng iPhone 15 Pro Max 256 GB",
+    title: "Đơn hàng Màn thông tin KNX",
     message: "Sẽ được giao trong 2 ngày tới, người đang chuẩn bị lấy hàng",
     date: "2024-07-20",
   },

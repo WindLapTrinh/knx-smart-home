@@ -5,7 +5,7 @@ import "../../css/payment/contentPayment.css";
 const ContentPayment = ({ cartData }) => {
   const calculateTotal = () => {
     return cartData.reduce(
-      (sum, item) => sum + item.price * item.quantity,
+      (sum, item) => sum + item.Price * item.quantity,
       0
     ).toLocaleString("vi-VN");
   };

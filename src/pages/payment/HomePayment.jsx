@@ -16,16 +16,13 @@ import "../../css/payment/paymentDetail.css";
 import CustomHeader from "../shared/pages/CustomHeader.jsx";
 
 const HomePayment = () => {
-  SetTitleHeader({
-    title: "Chi tiết thanh toán",
-  });
   //date payment -> context
   const { paymentData } = paymentContext();
   const navigate = useNavigate();
 
   return (
     <Box>
-      <CustomHeader title={"Chi tiết thanh toán"}/>
+      <CustomHeader title={"Chi tiết thanh toán"} showBackIcon={true} />
       <Box className="page-payment" p={4}>
         {paymentData.length > 0 ? (
           <Box>

@@ -8,7 +8,7 @@ const ProductItem = ({ product }) => {
   const [actionSheetVisible, setActionSheetVisible] = useState(false);
 
   const handleDetailProduct = () => {
-    navigate(`/detailProduct/${product.id}`);
+    navigate(`/detailProduct`,{state: {idProduct :product.Id}});
   };
 
   const handleSetActiveSheet = () => {
@@ -30,17 +30,19 @@ const ProductItem = ({ product }) => {
         <Box className="w-full aspect-square relative">
           <img
             loading="lazy"
-            src={product.image}
+            src={product.ImagesJson}
             className="absolute left-0 right-0 top-0 bottom-0 w-full h-full object-cover object-center rounded-lg bg-skeleton"
-            alt={product.name}
+            alt={product.Title}
           />
         </Box>
-        <Text className="product-name-item">{product.name}</Text>
+        <Text className="product-name-item">{product.Title.length > 35
+                      ? `${product.Title.substring(0, 35)}...`
+                      : product.Title}</Text>
       </div>
       <Text size="xxSmall" className="text-gray pb-2">
-        <span className="product-price">{product.price.toLocaleString("vi-VN")} đ</span>
+        <span className="product-price">{product.Price.toLocaleString("vi-VN")} vnđ</span>
         <span onClick={handleSetActiveSheet}>
-          <Icon className="product-icon" icon={product.icon} />
+          <Icon className="product-icon" icon="zi-plus-circle-solid" />
         </span>
       </Text>
       <SheetCart

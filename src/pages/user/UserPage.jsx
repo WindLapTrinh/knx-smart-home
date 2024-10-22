@@ -28,7 +28,7 @@ const UserPage = () => {
      <Box className="user-page" p={4}>
       <Box className="form-section" mt={2} mb={2} onClick={handleFollowOA}>
         <Text className="form-title" size="medium" bold mb={2}>
-        {followSuccess ? "Bạn đã là thành viên SLK" : "Trở thành thành viên Shop SLK"}
+        {followSuccess ? "Bạn đã là thành viên KNX Smart Home" : "Trở thành thành viên KNX Smart Home"}
         </Text>
         <Text size="small" className="descript-user">
           {followSuccess 

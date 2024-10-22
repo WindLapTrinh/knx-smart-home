@@ -1,38 +1,59 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CustomBottomNavigation from "../shared/components/CustomBottomNavigation.jsx";
 import CustomHeader from "../shared/pages/CustomHeader.jsx";
 import SheetCart from "../shared/common/cart/SheetCart";
-import axiosClient from "../shared/config/axios"; // Axios for API calls
+import axiosClient from "../shared/config/axios";
 import ProductList from "../home/ProductList.jsx";
-import { Box, Text, Button } from "zmp-ui";
+import {
+  Box,
+  Text,
+  Button,
+} from "zmp-ui";
 import { BsShop } from "react-icons/bs";
 import "../../css/detailhome/product/productDetail.css";
 
 const ProductDetail = () => {
-  const { productId } = useParams(); // Get product ID from URL
+  const location = useLocation();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null); // To store product details
   const [relatedProducts, setRelatedProducts] = useState([]); // To store related products
   const [actionSheetVisible, setActionSheetVisible] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch product details and related products by ID
+  // Extract idProduct from state
+  const { idProduct } = location.state || {};
+
+  // Fetch product details by ID
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await axiosClient.post(`productdetail?${productId}`);
-        const productData = response.data?._Product || {};
-        setProduct(productData);
-        setRelatedProducts(productData.relatedProducts || []); // Set related products
+        const response = await axiosClient.post(`productdetail?${idProduct}`);
+        const productData = response.data?._Product?.[0]; // Lấy sản phẩm đầu tiên
+        setProduct(productData || null);
       } catch (error) {
         console.error("Error fetching product details:", error);
       }
     };
 
-    if (productId) {
+    const fetchRelatedProducts = async () => {
+      try {
+        const productResponse = await axiosClient.post("api?apiproduct");
+        const filteredProducts = productResponse.data._Product.filter(
+          (product) => product.BestSeller === false
+        );
+        // Lấy 5 sản phẩm liên quan
+        setRelatedProducts(filteredProducts.slice(0, 8));
+      } catch (error) {
+        console.error("Error fetching related products:", error);
+      }
+    };
+
+    if (idProduct) {
       fetchProductDetails();
+      fetchRelatedProducts();
     }
-  }, [productId]);
+  }, [idProduct]);
 
   if (!product) {
     return <Text>Loading...</Text>;
@@ -53,27 +74,33 @@ const ProductDetail = () => {
 
   return (
     <Box>
-      <CustomHeader title={product.Title} showBackIcon={true} />
+      <CustomHeader title={product.Title.length > 30
+                      ? `${product.Title.substring(0, 30)}...`
+                      : product.Title} showBackIcon={true} />
       <Box className="container-product">
-        {/* Product details */}
+        <Box className="box-product-header">
+          <img src={product.ImagesJson} className="item-image-product" alt="" />
+        </Box>
         <Box className="product-detail">
-          <Box>
-            <img src={product.ImagesJson || "https://placehold.co/100x100"} alt="" />
-          </Box>
           <Box className="product-info">
             <Text className="product-name">{product.Title}</Text>
             <Text className="product-price">
-              {/* Use optional chaining and fallback for price */}
-              {product?.Price?.toLocaleString("vi-VN") || "N/A"} đ
+              {product.Price?.toLocaleString("vi-VN")} đ
             </Text>
-            <Text className="product-description">{product.Content}</Text>
             <Button className="add-to-cart-button" onClick={handleAddCart}>
               Thêm vào giỏ
             </Button>
+            <div
+              className="product-description"
+              dangerouslySetInnerHTML={{ __html: product.Content }}
+            />
+            <div
+              className="product-description"
+              dangerouslySetInnerHTML={{ __html: product.Des }}
+            />
           </Box>
         </Box>
 
-        {/* Related products */}
         <Box className="related-products">
           <div className="icon-related-products">
             <BsShop />
@@ -81,32 +108,27 @@ const ProductDetail = () => {
           <Text className="related-products-title">Sản phẩm liên quan</Text>
           <Box className="related-products-list">
             {relatedProducts.map((relatedProduct) => (
-              <Box key={relatedProduct.id} className="related-product-item">
+              <Box key={relatedProduct.Id} className="related-product-item">
                 <img
+                  src={relatedProduct.ImagesJson}
+                  alt={relatedProduct.Title}
                   className="related-product-image"
-                  src={relatedProduct.image}
-                  alt={relatedProduct.name}
                 />
-                <Text className="related-product-name">
-                  {relatedProduct.name}
-                </Text>
-                <Text className="related-product-price">
-                  {relatedProduct.price?.toLocaleString("vi-VN") || "N/A"} đ
-                </Text>
+                <Text className="related-product-name">{relatedProduct.Title.length > 10
+                      ? `${relatedProduct.Title.substring(0, 10)}...`
+                      : relatedProduct.Title}</Text>
+                <Text className="related-product-price">{relatedProduct.Price?.toLocaleString("vi-VN")} đ</Text>
               </Box>
             ))}
           </Box>
         </Box>
-
-        {/* Other product lists */}
         <Box mt={2}>
-          {/* <ProductList /> */}
+          <ProductList searchTerm={searchTerm}/>
         </Box>
-
-        {/* Navigation and cart */}
         <Box className="navigate-product">
           <CustomBottomNavigation />
         </Box>
+
         <SheetCart
           product={product}
           visible={actionSheetVisible}

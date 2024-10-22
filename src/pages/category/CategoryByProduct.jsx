@@ -7,6 +7,7 @@ import "../../css/detailhome/product/categoryProduct.css";
 
 const CategoryByProduct = ({ categories, gotoCategory }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleItemClick = (index) => {
     setSelectedIndex(index);
@@ -24,20 +25,20 @@ const CategoryByProduct = ({ categories, gotoCategory }) => {
                 id="contact-list"
                 scrollable="true"
               >
-                <Tabs.Tab key="tab1" label="Vegetables">
-                  <ProductList />
+                <Tabs.Tab key="tab1" label="Công tắc thông minh">
+                  <ProductList searchTerm={searchTerm} />
                 </Tabs.Tab>
-                <Tabs.Tab key="tab2" label="Điện thoại">
-                  <ProductList />
+                <Tabs.Tab key="tab2" label="Tin tức">
+                  <ProductList searchTerm={searchTerm} />
                 </Tabs.Tab>
-                <Tabs.Tab key="tab3" label="Máy tính">
-                  <ProductList />
+                <Tabs.Tab key="tab3" label="Sản phẩm">
+                  <ProductList searchTerm={searchTerm} />
                 </Tabs.Tab>
-                <Tabs.Tab key="tab4" label="Đồng hồ">
-                  <ProductList />
+                <Tabs.Tab key="tab4" label="KNX">
+                  <ProductList searchTerm={searchTerm} />
                 </Tabs.Tab>
-                <Tabs.Tab key="tab5" label="Tablet">
-                  <ProductList />
+                <Tabs.Tab key="tab5" label="Tin công nghệ">
+                  <ProductList searchTerm={searchTerm} />
                 </Tabs.Tab>
               </Tabs>
             </div>

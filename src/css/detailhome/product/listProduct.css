@@ -65,10 +65,12 @@
  }
  .sheet-title-product{
     font-weight: 500;
+    text-align: left;
  }
  .sheet-price-product{
     color: #27871C;
     font-weight: 500;
+    text-align: left !important;
  }
  .sheet-footer-product{
     padding: 10px;

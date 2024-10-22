@@ -22,7 +22,7 @@ const HomeCart = () => {
   const handleQuantityChange = (id, change) => {
     setItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id
+        item.Id === id
           ? {
               ...item,
               quantity: Math.max(item.quantity + change, 1),
@@ -56,28 +56,28 @@ const HomeCart = () => {
 
                 {items != "" ? (
                   items.map((item) => (
-                    <Box key={item.id} className="index-cart-item">
+                    <Box key={item.Id} className="index-cart-item">
                       <Box
                         className="delete-item-cart"
-                        onClick={() => handleDeleteProduct(item.id)}
+                        onClick={() => handleDeleteProduct(item.Id)}
                       >
                         <Icon className="icon-delete-item" icon="zi-close" />
                       </Box>
                       <Box className="cart-item" mt={2}>
                         <Box className="cart-item-image">
-                          <img src={item.image} alt={item.name} />
+                          <img src={item.ImagesJson} alt={item.ImagesJson} />
                         </Box>
                         <Box className="cart-item-info">
-                          <Text className="cart-item-name">{item.name}</Text>
+                          <Text className="cart-item-name">{item.Title}</Text>
                           <Text className="cart-item-price">
-                            {item.price.toLocaleString("vi-VN")} đ
+                            {item.Price.toLocaleString("vi-VN")} đ
                           </Text>
                         </Box>
                       </Box>
                       <Box className="cart-item-quantity">
                         <a
                           className="quantity-btn"
-                          onClick={() => handleQuantityChange(item.id, -1)}
+                          onClick={() => handleQuantityChange(item.Id, -1)}
                         >
                           -
                         </a>
@@ -89,7 +89,7 @@ const HomeCart = () => {
                         />
                         <a
                           className="quantity-btn"
-                          onClick={() => handleQuantityChange(item.id, 1)}
+                          onClick={() => handleQuantityChange(item.Id, 1)}
                         >
                           +
                         </a>

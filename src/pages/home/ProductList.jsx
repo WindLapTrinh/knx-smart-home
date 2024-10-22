@@ -112,10 +112,10 @@ const ProductList = ({ searchTerm }) => {
                     <ProductItem
                       key={product.Id}
                       product={{
-                        id: product.Id,
-                        name: product.Title,
-                        image: product.ImagesJson,
-                        price: product.Price,
+                        Id: product.Id,
+                        Title: product.Title,
+                        ImagesJson: product.ImagesJson,
+                        Price: product.Price,
                       }}
                     />
                   ))}

@@ -9,7 +9,7 @@ const OrderProduct = ({ items }) => {
   const { setPaymentData } = paymentContext();
 
   const totalPrice = items.reduce((total, item) => {
-    return total + item.price * item.quantity;
+    return total + item.Price * item.quantity;
   }, 0).toLocaleString("vi-VN");
 
   const handleCheckout = () => {

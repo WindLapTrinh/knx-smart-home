@@ -33,7 +33,7 @@ const MyApp = () => {
                     <Routes>
                     <Route path="/" element={<Home setTasks={setTasks} tasks={tasks} />} />
                       <Route path="/categoryByProduct" element={<CategoryByProduct setTasks={setTasks} tasks={tasks} />} />
-                      <Route path="/detailProduct/:productId" element={<ProductDetail />} />                      <Route path="/notificationPage" element={<NotificationPage setTasks={setTasks} tasks={tasks} />} />
+                      <Route path="/detailProduct" element={<ProductDetail setTasks={setTasks} tasks={tasks} />} />
                       <Route path="/user" element={<User setTasks={setTasks} tasks={tasks} />} />
                       <Route path="/purchaseHistory" element={<PurchaseHistory setTasks={setTasks} tasks={tasks} />} />
                       <Route path="/update" element={<UpdatePage setTasks={setTasks} tasks={tasks} />} />
@@ -42,6 +42,7 @@ const MyApp = () => {
                       <Route path="/homePayment" element={<HomePayment setTasks={setTasks} tasks={tasks} />} />
                       <Route path="/listAddress" element={<ListAddress setTasks={setTasks} tasks={tasks} />} />
                       <Route path="/evaluate" element={<Evaluate setTasks={setTasks} tasks={tasks} />} />
+                      <Route path="/notificationPage" element={<NotificationPage setTasks={setTasks} tasks={tasks} />} />
 
                     </Routes>
                   </ZMPRouter>

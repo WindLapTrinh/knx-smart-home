@@ -17,7 +17,7 @@ const ContactPayment = () => {
         </Box>
         <Box className="contact-shop" onClick={openChatScreen}>
           <img className="image-zalo-pay" src="/images/icon/zalo.jpg" />
-          <Text className="content-shop">Liên hệ với Tomo Order</Text>
+          <Text className="content-shop">Liên hệ KNX Smart Home</Text>
         </Box>
       </Box>
     </Box>

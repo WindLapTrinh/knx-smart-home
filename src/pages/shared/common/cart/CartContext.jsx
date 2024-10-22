@@ -34,7 +34,7 @@ export const CartProvider = ({ children }) => {
 
   // delete cart item
   const removeItemFromCart = (id) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+    setCart((prevCart) => prevCart.filter((item) => item.Id !== id));
     setToastVisible(true);
     openToast("Đã xóa sản phẩm thành công");
   };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Text } from "zmp-ui";
 import { HiMiniShoppingCart } from "react-icons/hi2";
 import axiosClient from "../shared/config/axios";
@@ -6,6 +7,7 @@ import "../../css/detailhome/swiper/swiper-bundle.min.css";
 import Loading from "../shared/pages/Loading";
 
 const CategoryProduct = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true); // For loading state
   const [error, setError] = useState(null); // For error handling
@@ -35,6 +37,9 @@ const CategoryProduct = () => {
   if(loading){
     return <Loading/>
   }
+  const handleDetailProduct = (id) =>{
+    navigate(`/detailProduct`,{state: {idProduct :id}});
+  }
 
   return (
     <Box className="product-today">
@@ -57,6 +62,7 @@ const CategoryProduct = () => {
               <div
                 key={product.Id}
                 className="custom-slider-item flex flex-col space-y-2 items-center category-item"
+                onClick={() => handleDetailProduct(product.Id)}
               >
                 <img
                   className="custom-border-image"
@@ -69,7 +75,7 @@ const CategoryProduct = () => {
                       ? `${product.Title.substring(0, 18)}...`
                       : product.Title}
                   </span>
-                  <span className="price-product-today">{product.Price} đ</span>
+                  <span className="price-product-today">{product.Price?.toLocaleString("vi-VN")} vnđ</span>
                 </Text>
               </div>
             ))
