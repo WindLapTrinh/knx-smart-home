@@ -1,61 +1,42 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  Box,
-  Text,
-  Button,
-  Swiper,
-  BottomNavigation,
-  Icon,
-  Sheet,
-  Input,
-} from "zmp-ui";
-import ProductList from "../home/ProductList.jsx";
-import SliderCategory from "./SliderCategory.jsx";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import CustomBottomNavigation from "../shared/components/CustomBottomNavigation.jsx";
 import CustomHeader from "../shared/pages/CustomHeader.jsx";
 import SheetCart from "../shared/common/cart/SheetCart";
-
+import axiosClient from "../shared/config/axios"; // Axios for API calls
+import ProductList from "../home/ProductList.jsx";
+import { Box, Text, Button } from "zmp-ui";
 import { BsShop } from "react-icons/bs";
 import "../../css/detailhome/product/productDetail.css";
 
-const product = {
-  id: 1,
-  name: "iPhone 15 ProMax 256 GB",
-  image: "/images/product/iphone_15_pro_max.png",
-  price: 24490000,
-  description:
-    "iPhone luôn là sự lừa chọn hàng đầu của giới trẻ ngày nay đặt biệt là thế hệ GenZ, iPhone mang tính sang chảnh, thiết kế tinh sảo, và độ bảo mật cao.",
-  relatedProducts: [
-    {
-      id: 2,
-      name: "iPhone 11 128 GB",
-      image: "/images/product/iphone_11.jpg",
-      price: 10190000,
-    },
-    {
-      id: 3,
-      name: "iPhone 14 Pluslus 512 GB",
-      image: "/images/product/iphone_14_pluspng.png",
-      price: 24990000,
-    },
-    {
-      id: 4,
-      name: "iPhone 13 ProMax",
-      image: "/images/product/iphone-13.jpg",
-      price: 13990000,
-    },
-    {
-      id: 5,
-      name: "iPhone 15 ProMax 256 GB",
-      image: "/images/product/iphone_15_pro_max.png",
-      price: 24490000,
-    },
-  ],
-};
 const ProductDetail = () => {
+  const { productId } = useParams(); // Get product ID from URL
   const navigate = useNavigate();
+  const [product, setProduct] = useState(null); // To store product details
+  const [relatedProducts, setRelatedProducts] = useState([]); // To store related products
   const [actionSheetVisible, setActionSheetVisible] = useState(false);
+
+  // Fetch product details and related products by ID
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const response = await axiosClient.post(`productdetail?${productId}`);
+        const productData = response.data?._Product || {};
+        setProduct(productData);
+        setRelatedProducts(productData.relatedProducts || []); // Set related products
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+      }
+    };
+
+    if (productId) {
+      fetchProductDetails();
+    }
+  }, [productId]);
+
+  if (!product) {
+    return <Text>Loading...</Text>;
+  }
 
   const handleAddCart = () => {
     setActionSheetVisible(true);
@@ -72,47 +53,57 @@ const ProductDetail = () => {
 
   return (
     <Box>
-      <CustomHeader title={"Ổ áp tường thông minh"} showBackIcon={true}/>
+      <CustomHeader title={product.Title} showBackIcon={true} />
       <Box className="container-product">
-        <SliderCategory />
+        {/* Product details */}
         <Box className="product-detail">
+          <Box>
+            <img src={product.ImagesJson || "https://placehold.co/100x100"} alt="" />
+          </Box>
           <Box className="product-info">
-            <Text className="product-name">{product.name}</Text>
+            <Text className="product-name">{product.Title}</Text>
             <Text className="product-price">
-              {product.price.toLocaleString("vi-VN")} đ
+              {/* Use optional chaining and fallback for price */}
+              {product?.Price?.toLocaleString("vi-VN") || "N/A"} đ
             </Text>
-            <Text className="product-description">{product.description}</Text>
+            <Text className="product-description">{product.Content}</Text>
             <Button className="add-to-cart-button" onClick={handleAddCart}>
               Thêm vào giỏ
             </Button>
           </Box>
-          <Box className="related-products">
-            <div className="icon-related-products">
-              <BsShop />
-            </div>
-            <Text className="related-products-title">Sản phẩm liên quan</Text>
-            <Box className="related-products-list">
-              {product.relatedProducts.map((relatedProduct) => (
-                <Box key={relatedProduct.id} className="related-product-item">
-                  <img
-                    className="related-product-image"
-                    src={relatedProduct.image}
-                    alt={relatedProduct.name}
-                  />
-                  <Text className="related-product-name">
-                    {relatedProduct.name}
-                  </Text>
-                  <Text className="related-product-price">
-                    {relatedProduct.price.toLocaleString("vi-VN")} đ
-                  </Text>
-                </Box>
-              ))}
-            </Box>
+        </Box>
+
+        {/* Related products */}
+        <Box className="related-products">
+          <div className="icon-related-products">
+            <BsShop />
+          </div>
+          <Text className="related-products-title">Sản phẩm liên quan</Text>
+          <Box className="related-products-list">
+            {relatedProducts.map((relatedProduct) => (
+              <Box key={relatedProduct.id} className="related-product-item">
+                <img
+                  className="related-product-image"
+                  src={relatedProduct.image}
+                  alt={relatedProduct.name}
+                />
+                <Text className="related-product-name">
+                  {relatedProduct.name}
+                </Text>
+                <Text className="related-product-price">
+                  {relatedProduct.price?.toLocaleString("vi-VN") || "N/A"} đ
+                </Text>
+              </Box>
+            ))}
           </Box>
         </Box>
+
+        {/* Other product lists */}
         <Box mt={2}>
-          <ProductList />
+          {/* <ProductList /> */}
         </Box>
+
+        {/* Navigation and cart */}
         <Box className="navigate-product">
           <CustomBottomNavigation />
         </Box>

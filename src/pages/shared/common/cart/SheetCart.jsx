@@ -38,12 +38,12 @@ const SheetCart = ({ product, visible, onClose, onAddToCart, onPayment }) => {
     >
       <Box p={4} className="custom-product-item" flex flexDirection="column">
         <Box className="sheet-header-product">
-          <img className="sheet-img-product" src={product.image} />
+          <img className="sheet-img-product" src={product.ImagesJson} />
           <Text className="sheet-title-product" size="large" bold>
-            {product.name}
+            {product.Title}
           </Text>
           <Text>
-            <span className="sheet-price-product">{product.price.toLocaleString("vi-VN")} đ</span>
+            <span className="sheet-price-product">{product.Price} đ</span>
           </Text>
         </Box>
         <Box

@@ -25,3 +25,15 @@ body {
   border-radius: 30px;
 }
 /* end user page */
+
+/* page loading  */
+.page-loading{
+  background-color: #ffffff;
+  width: 100%;
+  height: 100%;
+  position: relative;
+      padding-top: 45px !important;
+  margin:  0 auto;
+  padding: 0px 10px;
+  }
+  /* end loading  */

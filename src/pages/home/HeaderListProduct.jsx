@@ -3,7 +3,7 @@ import { Box, Input, Text } from "zmp-ui";
 import { FaHotjar } from "react-icons/fa";
 import "../../css/detailhome/product/headerListProduct.css";
 
-const HeaderListProduct = () => {
+const HeaderListProduct = ({ searchTerm, setSearchTerm }) => {
   return (
     <div className="header-container">
       <div className="header-list-product">
@@ -15,7 +15,12 @@ const HeaderListProduct = () => {
         </div>
       </div>
       <div className="input-search-product">
-        <Input.Search placeholder="tìm kiếm sản phẩm..." size="small" />
+        <Input.Search
+          placeholder="tìm kiếm sản phẩm..."
+          size="small"
+          value={searchTerm} 
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </div>
     </div>
   );

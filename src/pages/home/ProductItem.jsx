@@ -8,7 +8,7 @@ const ProductItem = ({ product }) => {
   const [actionSheetVisible, setActionSheetVisible] = useState(false);
 
   const handleDetailProduct = () => {
-    navigate("/detailProduct");
+    navigate(`/detailProduct/${product.id}`);
   };
 
   const handleSetActiveSheet = () => {

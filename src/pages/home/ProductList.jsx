@@ -1,122 +1,128 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axiosClient from "../shared/config/axios";
 import { Box, Text } from "zmp-ui";
 import ProductItem from "@/pages/home/ProductItem";
-import CustomHeader from "../shared/pages/CustomHeader";
+import Loading from "../shared/pages/Loading";
 import "../../css/detailhome/product/listProduct.css";
 
-const sampleProducts = [
-  {
-    id: 1,
-    name: "iPhone 15 Pro Max Titan Trắng",
-    image: "/images/product/iphone-15-promax-trang-1.jpg",
-    category: "iPhone 15 Pro Max",
-    price: 29490000,
-    icon: "zi-plus-circle-solid",
-  },
-  {
-    id: 2,
-    name: "iPhone 15 Pro Max Titan Xanh",
-    image: "/images/product/iphone-15-promax-xanh-1.jpg",
-    category: "iPhone 15 Pro Max",
-    price: 29490000,
-    icon: "zi-plus-circle-solid",
-  },
-  {
-    id: 3,
-    name: "iPhone 15 Pro Max Titan Đen",
-    image: "/images/product/iphone-15-promax-den-1.jpg",
-    category: "iPhone 15 Pro Max",
-    price: 29490000,
-    icon: "zi-plus-circle-solid",
-  },
-  {
-    id: 4,
-    name: "iPhone 15 Pro Max Titan Tự Nhiên",
-    image: "/images/product/iphone-15-promax-xanh-vang-1.jpg",
-    category: "iPhone 15 Pro Max",
-    price: 29490000,
-    icon: "zi-plus-circle-solid",
-  },
-  {
-    id: 5,
-    name: "Macbook Air M3 Màu Xám",
-    image: "/images/product/macbook-air-m3-13-2024-xam-1.jpg",
-    category: "MacBook Ari M3 13 2024",
-    price: 26990000,
-    icon: "zi-plus-circle-solid",
-  },
-  {
-    id: 6,
-    name: "Macbook Air M3 Màu Bạc Trắng",
-    image: "/images/product/macbook-air-m3-13-2024-bac-1.jpg",
-    category: "MacBook Ari M3 13 2024",
-    price: 26990000,
-    icon: "zi-plus-circle-solid",
-  },
-  {
-    id: 7,
-    name: "Macbook Air M3 Màu Xanh",
-    image: "/images/product/macbook-air-m3-13-2024-xanh-1.jpg",
-    category: "MacBook Ari M3 13 2024",
-    price: 26990000,
-    icon: "zi-plus-circle-solid",
-  },
-  {
-    id: 8,
-    name: "Macbook Air M3 Màu Vàng",
-    image: "/images/product/macbook-air-m3-13-2024-vang-1.jpg",
-    category: "MacBook Ari M3 13 2024",
-    price: 26990000,
-    icon: "zi-plus-circle-solid",
-  },
-];
+const ProductList = ({ searchTerm }) => {
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]); // Categories state
+  const [loading, setLoading] = useState(true); // For loading state
+  const [error, setError] = useState(null); // For error handling
+  const [showAll, setShowAll] = useState({}); // To track "show all" state per category
 
-const ProductList = () => {
-  // Nhóm sản phẩm theo danh mục
-  const groupedProducts = sampleProducts.reduce((acc, product) => {
-    if (!acc[product.category]) {
-      acc[product.category] = [];
+  // Fetch both products and categories
+  useEffect(() => {
+    const fetchProductsAndCategories = async () => {
+      try {
+        // Fetch categories
+        const categoryResponse = await axiosClient.post("api?apicategory");
+        setCategories(categoryResponse.data?._Category || []);
+
+        // Fetch products
+        const productResponse = await axiosClient.post("api?apiproduct");
+        const filteredProducts = productResponse.data._Product.filter(
+          (product) => product.BestSeller === false
+        );
+        setProducts(filteredProducts);
+      } catch (error) {
+        setError("Error fetching data: " + error.message);
+      } finally {
+        setLoading(false); // Set loading to false after fetching
+      }
+    };
+
+    fetchProductsAndCategories();
+  }, []);
+
+  // Apply search term to filter products
+  const filteredProducts = products.filter((product) =>
+    product.Title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Get category name by matching catid with the category Id
+  const getCategoryName = (catid) => {
+    const category = categories.find((cat) => cat.Id === catid);
+    return category ? category.Title : "Unknown Category";
+  };
+
+  // Group products by catid
+  const groupedProducts = filteredProducts.reduce((acc, product) => {
+    if (!acc[product.catid]) {
+      acc[product.catid] = [];
     }
-    acc[product.category].push(product);
+    acc[product.catid].push(product);
     return acc;
   }, {});
+
+  // Handle "Show All" button click
+  const handleShowAll = (categoryId) => {
+    setShowAll((prevState) => ({
+      ...prevState,
+      [categoryId]: !prevState[categoryId], // Toggle showAll state for this category
+    }));
+  };
+
+  if (loading) {
+    return <Loading/>; // Show loading text
+  }
+
+  if (error) {
+    return <Text color="red">{error}</Text>; // Show error message
+  }
 
   return (
     <Box>
       <Box className="list-product">
-        {Object.entries(groupedProducts).map(([category, products]) => (
-          <Box key={category} mt={4}>
-            <Box
-              className="title-category"
-              flex
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-              mb={2}
-            >
-              <Text
-                fontWeight="bold"
-                className="title-category-product"
-                fontSize="lg"
+        {Object.entries(groupedProducts).length === 0 ? (
+          <Text>Không có sản phẩm nào !</Text> // Show message when no products are found
+        ) : (
+          Object.entries(groupedProducts).map(([categoryId, products]) => (
+            <Box key={categoryId} mt={4}>
+              <Box
+                className="title-category"
+                flex
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                mb={2}
               >
-                {category}
-              </Text>
-              <Text
-                className="all-product"
-                fontSize="sm"
-                color="blue"
-                cursor="pointer"
-              >
-                Tất cả
-              </Text>
+                <Text
+                  fontWeight="bold"
+                  className="title-category-product"
+                  fontSize="lg"
+                >
+                  {getCategoryName(Number(categoryId))}
+                </Text>
+                <Text
+                  className="all-product"
+                  fontSize="sm"
+                  color="blue"
+                  cursor="pointer"
+                  onClick={() => handleShowAll(categoryId)}
+                >
+                  {showAll[categoryId] ? "Thu gọn" : "Tất cả"}
+                </Text>
+              </Box>
+              <Box className="grid grid-cols-2 gap-4">
+                {products
+                  .slice(0, showAll[categoryId] ? products.length : 6) // Show all or just 6 products
+                  .map((product) => (
+                    <ProductItem
+                      key={product.Id}
+                      product={{
+                        id: product.Id,
+                        name: product.Title,
+                        image: product.ImagesJson,
+                        price: product.Price,
+                      }}
+                    />
+                  ))}
+              </Box>
             </Box>
-            <Box className="grid grid-cols-2 gap-4">
-              {products.map((product) => (
-                <ProductItem key={product.id} product={product} />
-              ))}
-            </Box>
-          </Box>
-        ))}
+          ))
+        )}
       </Box>
     </Box>
   );
