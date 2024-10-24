@@ -11,6 +11,7 @@ const ListAddress = () => {
   const navigate = useNavigate();
   const { address, setAddress } = useAddress();
 
+  console.log("Address cart:",address);
   useEffect(() => {
     // Retrieve addresses from local storage when the component mounts
     const storedAddresses = JSON.parse(localStorage.getItem("addresses"));

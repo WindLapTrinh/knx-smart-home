@@ -9,6 +9,14 @@ body {
   font-size: 24px;
   color: white;
 }
+.zaui-modal-content-actions-vertical {
+  flex-direction: unset;
+  align-items: unset;
+  justify-content: end;
+}
+.zaui-btn-tertiary, .zaui-btn-tertiary.zaui-btn-highlight{
+  color: rgb(218, 23, 23);
+}
 .page-custom-header {
   background-color: #27871C;
   color: white;

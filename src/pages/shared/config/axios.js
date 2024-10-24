@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "https://nhathongminh.webmau.pro/",
+  baseURL: "https://nhathongminhknx.com/",
 });
 
 export default axiosClient;

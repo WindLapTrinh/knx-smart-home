@@ -3,16 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { Box, Text, Input, Button, Checkbox, Icon, Select } from "zmp-ui";
 import useUser from "../shared/hooks/useUser";
 import usePhoneNumber from "../shared/hooks/usePhoneNumber";
-import { useAddress } from "../shared/common/cart/AddressContext"; // Import the hook
+import { useAddress } from "../shared/common/cart/AddressContext";
 import CustomHeader from "../shared/pages/CustomHeader";
 import "../../css/cart/addressPage.css";
-import { IoEllipseSharp } from "react-icons/io5";
 
 const { Option } = Select;
 
 const AddressPage = () => {
   const navigate = useNavigate();
-  const { address, setAddress } = useAddress(); // Destructure `setAddress` from the context
+  const { address, setAddress } = useAddress();
   const [isDefault, setIsDefault] = useState(false);
   const [cities, setCities] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -21,6 +20,7 @@ const AddressPage = () => {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedWard, setSelectedWard] = useState("");
   const [streetName, setStreetName] = useState("");
+  const [email, setEmail] = useState(""); // Trạng thái cho email
   const {
     userInfo,
     loading: userLoading,
@@ -126,15 +126,24 @@ const AddressPage = () => {
     setSelectedWard(value);
   };
 
-  // method add address
   const handleStreetNameChange = (e) => {
     setStreetName(e.target.value);
   };
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value); // Cập nhật giá trị email
+  };
+
   const handleSubmitAddress = () => {
+    // Kiểm tra tính hợp lệ của email
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      alert("Vui lòng nhập địa chỉ email hợp lệ.");
+      return;
+    }
+
     let updatedAddresses = [...address];
 
-    // If the new address is marked as default, set all others to non-default
     if (isDefault) {
       updatedAddresses = updatedAddresses.map((addr) => ({
         ...addr,
@@ -146,6 +155,7 @@ const AddressPage = () => {
       id: new Date().getTime(),
       name: userInfo.name || "",
       phone: phoneNumber || "",
+      email, // Thêm email vào địa chỉ
       city: getCityNameById(selectedCity),
       district: getDistrictNameById(selectedDistrict),
       ward: getWardNameById(selectedWard),
@@ -153,14 +163,10 @@ const AddressPage = () => {
       isDefault,
     };
 
-    // Add the new address to the updated addresses list
     updatedAddresses.push(newAddress);
 
-    // Update the state and save to local storage
     setAddress(updatedAddresses);
     localStorage.setItem("addresses", JSON.stringify(updatedAddresses));
-
-    // Navigate to the list address page
     navigate("/listAddress");
   };
 
@@ -179,14 +185,13 @@ const AddressPage = () => {
     return ward ? ward.name : "";
   };
 
-  //on back list 
   const handleOnBackList = () => {
-    if(phoneNumber){
+    if (phoneNumber) {
       navigate("/homeCart");
-    }else{
+    } else {
       navigate(-1);
     }
-  }
+  };
 
   if (userLoading || phoneLoading) return <div>Loading...</div>;
   if (userError) return <div>Error loading user info: {userError.message}</div>;
@@ -195,7 +200,11 @@ const AddressPage = () => {
 
   return (
     <Box>
-      <CustomHeader title={"Địa chỉ"} showBackIcon={true} onBackClick={handleOnBackList}/>
+      <CustomHeader
+        title={"Địa chỉ"}
+        showBackIcon={true}
+        onBackClick={handleOnBackList}
+      />
       <Box className="address-page" p={4}>
         <Box className="contact-info" mb={4}>
           <Text className="section-title" size="large" bold mb={2}>
@@ -217,6 +226,13 @@ const AddressPage = () => {
                 value={phoneNumber || ""}
                 readOnly
               />
+              <Input
+                placeholder="Nhập email của bạn"
+                size="large"
+                className="input-field"
+                value={email} // Cập nhật giá trị email
+                onChange={handleEmailChange} // Xử lý sự thay đổi email
+              />
             </Box>
           )}
         </Box>
@@ -232,7 +248,7 @@ const AddressPage = () => {
             }
             size="large"
             className="city-select"
-            onChange={(value) => handleCityChange(value)}
+            onChange={handleCityChange}
             closeOnSelect={true}
           >
             {cities.map((city) => (
@@ -249,7 +265,7 @@ const AddressPage = () => {
                 : "Chọn quận/huyện"
             }
             size="large"
-            onChange={(value) => handleDistrictChange(value)}
+            onChange={handleDistrictChange}
             disabled={!selectedCity}
             closeOnSelect={true}
             mb={2}
@@ -268,7 +284,7 @@ const AddressPage = () => {
                 : "Chọn phường/xã/thị trấn"
             }
             size="large"
-            onChange={(value) => handleWardChange(value)}
+            onChange={handleWardChange}
             disabled={!selectedDistrict}
             closeOnSelect={true}
           >
@@ -280,11 +296,12 @@ const AddressPage = () => {
           </Select>
 
           <Input
-            placeholder="Tên đường"
+            placeholder="Nhập địa chỉ cụ thể"
             size="large"
             className="input-field"
             value={streetName}
             onChange={handleStreetNameChange}
+            mb={2}
           />
         </Box>
         <Box className="default-address">

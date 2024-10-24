@@ -17,18 +17,19 @@ const ProductPayment = ({ cartData }) => {
       </Box>
       { cartData.length > 0 ?cartData.map((item) => (
         <Box key={item.id} className="index-product-payment">
-          <Box className="product-payment-item" mt={2}>
+          <Box className="product-payment-item">
             <Box className="product-payment-image">
               <img src={item.ImagesJson} alt={item.ImagesJson} />
             </Box>
             <Box className="product-payment-info">
               <Text className="product-payment-name">{item.Title}</Text>
             </Box>
-          </Box>
-          <Box className="total-item-payment">
+            <Box className="total-item-payment">
             <Text className="quantity-product-item">x{item.quantity}</Text>
             <Text className="cart-item-price">{item.Price.toLocaleString("vi-VN")} đ</Text>
           </Box>
+          </Box>
+          
         </Box>
       )) : <Text>Không có sản phẩm nào trong giỏ hàng</Text>}
     </Box>

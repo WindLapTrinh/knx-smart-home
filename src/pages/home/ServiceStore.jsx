@@ -3,7 +3,7 @@ import { Box, Text } from "zmp-ui";
 import "../../css/detailhome/serviceStore.css";
 
 const ServiceStore = ({ categories, onServiceStoreClick }) => {
-  const categoryList = categories?._Category || [];
+  const categoryList = categories?._Category || []; 
 
   return (
     <Box className="detail-service">
@@ -13,7 +13,7 @@ const ServiceStore = ({ categories, onServiceStoreClick }) => {
             <div
               key={category.Id}
               className="slider-item flex flex-col space-y-2 items-center"
-              onClick={() => onServiceStoreClick(category.Id)}
+              onClick={() => onServiceStoreClick(category.Id)} 
             >
               <img
                 className="w-12 h-12 boder-image"
@@ -21,7 +21,7 @@ const ServiceStore = ({ categories, onServiceStoreClick }) => {
                 alt={category.Title}
               />
               <Text size="xxSmall" className="text-service">
-                {category.Title}
+                {category.Title.length > 10 ? `${category.Title.substring(0, 10)}...` : category.Title}
               </Text>
             </div>
           ))}
@@ -30,4 +30,5 @@ const ServiceStore = ({ categories, onServiceStoreClick }) => {
     </Box>
   );
 };
+
 export default ServiceStore;

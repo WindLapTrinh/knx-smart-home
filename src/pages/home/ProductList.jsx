@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom"; 
 import axiosClient from "../shared/config/axios";
 import { Box, Text } from "zmp-ui";
 import ProductItem from "@/pages/home/ProductItem";
 import Loading from "../shared/pages/Loading";
 import "../../css/detailhome/product/listProduct.css";
 
-const ProductList = ({ searchTerm }) => {
+const ProductList = ({ searchTerm }) => {  
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]); // Categories state
   const [loading, setLoading] = useState(true); // For loading state

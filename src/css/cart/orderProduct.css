@@ -36,4 +36,8 @@
     font-weight: 500;
     color: #27871C;
   }
+  .btn-disabled{
+    background-color: #cfcfcf !important;
+    color: #a7a7a7 !important;
+  }
   

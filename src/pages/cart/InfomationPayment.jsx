@@ -1,72 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import { List, Icon, Box, Text } from "zmp-ui";
-import "../../css/cart/infomationPayment.css";
-import { FaSackDollar } from "react-icons/fa6";
-import { FaTruck } from "react-icons/fa6";
-import { Title } from "chart.js";
-const InfomationPayment = () => {
+import "../../css/cart/infomationVoucher.css";
+import { FaMoneyCheckDollar } from "react-icons/fa6";
+import MethodPaymentSheet from "../vouchers/MethodPaymentSheet"; // Nhập component mới
+
+const InfomationVoucher = () => {
+  const [actionSheetVisible, setActionSheetVisible] = useState(false);
+  const [voucherCode, setVoucherCode] = useState(""); // Để lưu mã voucher nhập vào
+
+  const handleApplyVoucher = () => {
+    setActionSheetVisible(true);
+  };
+
+  const handleApplyCode = () => {
+    // Xử lý mã voucher ở đây
+    console.log("Voucher Code Applied:", voucherCode);
+    setActionSheetVisible(false);
+  };
+
   return (
-    <Box className="detail-payment">
-      <Box className="header-cart-product">
+    <Box className="infomation-voucher" pb={6}>
+      <Box className="header-infomation" mb={2}>
         <img
-          className="icon-header-cart"
-          src="/images/icon/detail-payment.jpg"
+          className="icon-infomation"
+          src="/images/icon/payment-cart.jpg"
+          alt="Voucher Icon"
         />
         <Text className="section-title" size="large" bold mb={3}>
-          Chi tiết thanh toán
+          Thanh toán
         </Text>
       </Box>
-      <Box className="payment-cart" mt={2}>
+      <Box className="detail-infomation" mt={2}>
         <List>
-          <List.Item className="payment-detail">
-            <div className="list-item-payment">
-              <FaSackDollar className="payment-icon" />
-              <div className="item-payment">
-                <div className="title-sum-cart">0 đ</div>
-                <div className="payment-description">Tổng tiền hàng</div>
+          <List.Item className="item-infomation" onClick={handleApplyVoucher}>
+            <div className="list-infomation">
+              <FaMoneyCheckDollar className="voucher-icon" />
+              <div className="infomation-ticker">
+                <div className="title-ticker">Phương thức</div>
+                <div className="sum-voucher">Thanh toán khi nhận hàng</div>
               </div>
-            </div>
-          </List.Item>
-          <List.Item className="payment-detail">
-            <div className="list-item-payment">
-              <FaTruck className="payment-icon" />
-              <div className="item-payment">
-                <div className="title-frre-payment">Miễn phí vận chuyển</div>
-                <div className="free-description">Phí vận chuyển</div>
-                <div className="ticker-ship">Giảm 30k phí vận chuyển đơn từ 200k</div>
-              </div>
-            </div>
-            <div className="payment-methods">
-              <div className="title-method">Các phương thức thanh toán</div>
-              <Box className="orthe-cart-product">
-                <img
-                  className="icon-orthe-cart"
-                  src="/images/icon/zalo-pay.jpg"
-                />
-                <img
-                  className="icon-orthe-cart"
-                  src="/images/icon/payment-cart.jpg"
-                />
-                <img className="icon-orthe-cart" src="/images/icon/cash.jpg" />
-              </Box>
-              <Box mt={2}>
-                <div className="content-orthe-cart">
-                  Hỗ trợ đầy đủ các phương thức thanh toán như:
-                </div>
-                <div className="descript-orther-cart">
-                  Zalo Pay, thanh toán khi nhận hàng, chuyển khoản
-                </div>
-                <div className="note-orthe-cart">
-                  (*) Lựa chọn các thương thức thanh toán sau khi đặt hàng
-                </div>
-              </Box>
+              <Icon icon="zi-chevron-right" className="list-item-chevron" />
             </div>
           </List.Item>
         </List>
       </Box>
-      <Box className="contact-cart" mt={2}>Bằng với việc tiến hàng đặt hàng, bạn đồng ý với điều kiện và điều khoản sử dụng của Mini App Tomo Makert</Box>
+      {/* Sử dụng component VoucherSheet */}
+      <MethodPaymentSheet
+        visible={actionSheetVisible}
+        onClose={() => setActionSheetVisible(false)}
+        onApplyCode={handleApplyCode}
+        voucherCode={voucherCode}
+        setVoucherCode={setVoucherCode}
+      />
     </Box>
   );
 };
 
-export default InfomationPayment;
+export default InfomationVoucher;

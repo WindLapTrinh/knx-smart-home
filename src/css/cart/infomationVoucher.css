@@ -1,6 +1,9 @@
 .zaui-sheet-wrapper{
     z-index: 2000;
 }
+.infomation-voucher{
+    padding-bottom: 120px;
+}
 .header-infomation{
     display: flex;
     align-items: center;
