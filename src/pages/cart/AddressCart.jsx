@@ -5,12 +5,14 @@ import useUser from "../shared/hooks/useUser";
 import usePhoneNumber from "../shared/hooks/usePhoneNumber";
 import { useAddress } from "../shared/common/cart/AddressContext";
 import CustomHeader from "../shared/pages/CustomHeader";
+import useToast from "../shared/hooks/useToast";
 import "../../css/cart/addressPage.css";
 
 const { Option } = Select;
 
 const AddressPage = () => {
   const navigate = useNavigate();
+  const opneToast = useToast();
   const { address, setAddress } = useAddress();
   const [isDefault, setIsDefault] = useState(false);
   const [cities, setCities] = useState([]);
@@ -138,7 +140,7 @@ const AddressPage = () => {
     // Kiểm tra tính hợp lệ của email
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-      alert("Vui lòng nhập địa chỉ email hợp lệ.");
+      opneToast("Vui lòng nhập địa chỉ email hợp lệ.");
       return;
     }
 

@@ -4,6 +4,7 @@ body{
 .notification-page {
     padding: 16px;
     background-color: #ffffff;
+    padding-bottom: 56px;
   }
   
   .page-title {
@@ -16,8 +17,8 @@ body{
     flex-direction: column;
   }
   
-  .notification-item {
-    background-color: #3c813d;
+  .notification-item { 
+    background-color: #359614;
     color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

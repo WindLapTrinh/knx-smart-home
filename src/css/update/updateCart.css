@@ -30,3 +30,32 @@
     background-color: #333;
     transition: 0.5s;
   }
+  .item-cart-false{
+    background: #359614;
+    padding: 10px;
+    border-radius: 8px;
+    color: white;
+    transition: box-shadow 0.3s ease, transform 0.3s ease; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+
+  }
+  .item-cart-true{
+    background: #95ca84;
+    padding: 10px;
+    border-radius: 8px;
+    color: #61915f;
+    transition: box-shadow 0.3s ease, transform 0.3s ease; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+
+  }
+  .cart-order-code-false{
+    text-align: center;
+    color: #ffe233;
+  }
+  .cart-order-code-true{
+    text-align: center;
+    color: #61915f;
+  }
+  .update-cart-order-status{
+    padding-right: 10px;
+  }

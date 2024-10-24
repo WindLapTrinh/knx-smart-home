@@ -20,17 +20,18 @@ export const CartProvider = ({ children }) => {
 
   const addItemToCart = (item) => {
     setCart((prevCart) => {
-      const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
+      const existingItem = prevCart.find((cartItem) => cartItem.Id === item.Id); // Đảm bảo sử dụng Id đúng
       if (existingItem) {
         return prevCart.map((cartItem) =>
-          cartItem.id === item.id
+          cartItem.Id === item.Id
             ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
             : cartItem
         );
       }
-      return [...prevCart, item];
+      return [...prevCart, { ...item, quantity: item.quantity }]; // Thêm quantity khi thêm sản phẩm mới
     });
   };
+  
 
   // delete cart item
   const removeItemFromCart = (id) => {

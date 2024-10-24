@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Box, Tabs } from "zmp-ui";
 import { useLocation } from "react-router-dom"; 
-import ProductList from "@/pages/home/ProductList";
 import CustomHeader from "../shared/pages/CustomHeader";
 import CustomBottomNavigation from "../shared/components/CustomBottomNavigation";
-import ProductByCategory from "./ProductByCegory";
+import ProductByCategory from "./ProductByCategory";
 import axiosClient from "../shared/config/axios";
 import "../../css/detailhome/product/categoryProduct.css";
 

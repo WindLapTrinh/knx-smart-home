@@ -5,9 +5,7 @@ import "../styles/app.css";
 const Loading = () =>{
     return(
         <div className="page-loading">
-          <Text.Title size="small">Đang nạp dữ liệu...</Text.Title>
           <Box
-            mt={6}
             flex
             flexDirection="column"
             justifyContent="center"

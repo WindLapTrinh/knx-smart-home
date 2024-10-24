@@ -71,6 +71,9 @@ const ProductDetail = () => {
     setActionSheetVisible(false);
     navigate("/homeCart");
   };
+  const handleDetailProduct = (id) => {
+    navigate(`/detailProduct`,{state: {idProduct :id}});
+  }
 
   return (
     <Box>
@@ -108,7 +111,7 @@ const ProductDetail = () => {
           <Text className="related-products-title">Sản phẩm liên quan</Text>
           <Box className="related-products-list">
             {relatedProducts.map((relatedProduct) => (
-              <Box key={relatedProduct.Id} className="related-product-item">
+              <Box key={relatedProduct.Id} className="related-product-item" onClick={() =>handleDetailProduct(relatedProduct.Id)}>
                 <img
                   src={relatedProduct.ImagesJson}
                   alt={relatedProduct.Title}

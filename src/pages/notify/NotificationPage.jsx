@@ -1,63 +1,161 @@
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Box, Text, Button } from "zmp-ui";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Box, Text, Button, Modal } from "zmp-ui";
+import { useNavigate } from "react-router-dom";
+import { useAddress } from "../shared/common/cart/AddressContext";
+import axiosClient from "../shared/config/axios";
 import CustomBottomNavigation from "../shared/components/CustomBottomNavigation";
 import CustomHeader from "../shared/pages/CustomHeader";
+import "../../css/update/updateCart.css";
 
-import "../../css/notify/notifyPage.css";
-
-const notifications = [
-  {
-    id: 1,
-    title: "Đơn hàng Màn thông tin KNX",
-    message: "Sẽ được giao trong 2 ngày tới, người đang chuẩn bị lấy hàng",
-    date: "2024-07-20",
-  },
-  // Thêm các thông báo khác nếu cần
-];
-
-const NotificationPage = () => {
-  const location = useLocation();
+const Notification = () => {
   const navigate = useNavigate();
-  
-  const { keyTab } = location.state || { keyTab}; 
-  const handleHistoryCart = () => {
-    navigate("/purchaseHistory");
-  }
+  const { address } = useAddress();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const defaultAddress = address.find((addr) => addr.isDefault);
+  const [orders, setOrders] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState(null); // Thêm state để lưu đơn hàng đã chọn
+  console.log("Data Order:", orders);
+
+  useEffect(() => {
+    axiosClient
+      .post(`api?orderphone=0833012475`)
+      .then((response) => {
+        // Check if response.data.order is a string, then parse it.
+        const orderData =
+          typeof response.data.order === "string"
+            ? JSON.parse(response.data.order).reverse()
+            : response.data.order.reverse();
+
+        // Lọc đơn hàng có Active là true
+        const activeOrders = orderData.filter((order) => order.Active === false);
+        setOrders(activeOrders);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error calling API for Purchase History", error);
+        setLoading(false);
+      });
+  }, [defaultAddress]);
+
+  const getOrderStatusInVietnamese = (status) => {
+    switch (status) {
+      case "NEW":
+        return "Đơn mới";
+      case "DELIVERING":
+        return "Đang giao";
+      case "SUCCESS":
+        return "Đã hoàn thành";
+      case "CANCELLED":
+        return "Đã hủy";
+      default:
+        return status;
+    }
+  };
+
+  const handleStatusClick = async (order) => {
+    setSelectedOrder(order); // Lưu đơn hàng đã chọn
+    setModalOpen(true);
+    setLoading(true);
+
+    try {
+      // Gửi yêu cầu cập nhật trạng thái lên server
+      const response = await axiosClient.post(`api?orderid=${order.Id}`);
+
+      if (response.status === 200) {
+        console.log("Order status updated:", response.data);
+      } else {
+        console.error("Error updating order status:", response.data);
+        alert("Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+      alert("Không thể kết nối với máy chủ.");
+    }
+  };
 
   return (
     <Box>
       <CustomHeader title={"Thông báo"}/>
-    <Box className="notification-page">
-      <Box className="notification-list">
-        {notifications.map((notification) => (
-          <Box
-            key={notification.id}
-            className="notification-item"
-            p={2}
-            mb={2}
-            border
-            onClick={handleHistoryCart}
-          >
-            <Text className="notification-title" size="medium" bold>
-              {notification.title}
-            </Text>
-            <Text className="notification-message" size="small">
-              {notification.message}
-            </Text>
-            <Text className="notification-date" size="xSmall" color="gray">
-              {notification.date}
-            </Text>
-            {/* <Button className="view-details-button" mt={2}>
-              View Detail
-            </Button> */}
+      <Box className="notification-page">
+        {orders.length > 0 ? (
+          orders.map((order) => (
+            <Box
+              key={order.Id} // Thêm key cho mỗi item
+              className={
+                order.Active === false ? "item-cart-false" : "item-cart-true"
+              }
+              justifyContent="flex-start"
+              onClick={() => handleStatusClick(order)} // Gọi hàm với order đã chọn
+              mb={2}
+            >
+              <Text
+                className={
+                  order.Active === false
+                    ? "cart-order-code-false"
+                    : "cart-order-code-true"
+                }
+                size="large"
+                bold
+                mt={2}
+              >
+                Mã đơn hàng: {order.OrderCode}
+              </Text>
+              <span className="update-cart-order-status" size="medium" mt={2}>
+                Trạng thái: {getOrderStatusInVietnamese(order.OrderStatus)}
+              </span>
+              <span className="update-cart-order-amount" size="medium" mt={2}>
+                Tổng tiền: {order.TotalAmount.toLocaleString("vi-VN")} VND
+              </span>
+
+              <Text className="update-cart-order-name" size="medium" mt={2}>
+                Khách hàng: {order.Name}
+              </Text>
+              <Text className="update-cart-order-phone" size="medium" mt={2}>
+                Số điện thoại: {order.Phone}
+              </Text>
+              <Text className="update-cart-order-address" size="medium" mt={2}>
+                Địa chỉ giao hàng: {order.DeliveryAddress}
+              </Text>
+            </Box>
+          ))
+        ) : (
+          <Box className="update-cart-page" textAlign="center">
+            <Text>Không có đơn hàng nào</Text>
           </Box>
-        ))}
+        )}
+
+        {/* Modal xác nhận cập nhật trạng thái */}
+        {selectedOrder && ( // Kiểm tra xem đã chọn đơn hàng hay chưa
+          <Modal
+            visible={isModalOpen}
+            onClose={() => setModalOpen(false)}
+            title="Thông tin đơn hàng"
+            footer={
+              <Button onClick={handleStatusClick} disabled={loading} fullWidth>
+                {loading ? "Đang cập nhật..." : "Cập nhật"}
+              </Button>
+            }
+          >
+            <Box>
+              <Text>Mã đơn hàng: {selectedOrder.OrderCode}</Text>
+              <Text>
+                Trạng thái hiện tại:{" "}
+                {getOrderStatusInVietnamese(selectedOrder.OrderStatus)}
+              </Text>
+              <Text>Khách hàng: {selectedOrder.Name}</Text>
+              <Text>
+                Tổng tiền: {selectedOrder.TotalAmount.toLocaleString("vi-VN")}{" "}
+                VND
+              </Text>
+            </Box>
+          </Modal>
+        )}
       </Box>
-      <CustomBottomNavigation />
-    </Box>
+      <CustomBottomNavigation/>
     </Box>
   );
 };
 
-export default NotificationPage;
+export default Notification;

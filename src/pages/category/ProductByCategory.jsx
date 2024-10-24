@@ -6,8 +6,7 @@ import "../../css/detailhome/product/listProduct.css";
 
 const ProductByCategory = ({ products }) => {
   const navigate = useNavigate();
-  const [visibleSheets, setVisibleSheets] = useState({}); // Quản lý trạng thái của từng sản phẩm
-
+  const [visibleSheets, setVisibleSheets] = useState({});
   const handleDetailProduct = (productId) => {
     navigate(`/detailProduct`, { state: { idProduct: productId } });
   };
@@ -15,24 +14,23 @@ const ProductByCategory = ({ products }) => {
   const handleSetActiveSheet = (productId) => {
     setVisibleSheets((prev) => ({
       ...prev,
-      [productId]: true, // Mở `SheetCart` cho sản phẩm cụ thể
+      [productId]: true, 
     }));
   };
 
   const handleCloseSheet = (productId) => {
     setVisibleSheets((prev) => ({
       ...prev,
-      [productId]: false, // Đóng `SheetCart` cho sản phẩm cụ thể
+      [productId]: false, 
     }));
   };
 
   const handleAddToCart = (productId) => {
-    // Logic thêm sản phẩm vào giỏ hàng
-    handleCloseSheet(productId); // Đóng SheetCart sau khi thêm vào giỏ hàng
+    handleCloseSheet(productId); 
   };
 
   const handlePayment = (productId) => {
-    handleCloseSheet(productId); // Đóng SheetCart và điều hướng đến trang giỏ hàng
+    handleCloseSheet(productId);
     navigate("/homeCart");
   };
 

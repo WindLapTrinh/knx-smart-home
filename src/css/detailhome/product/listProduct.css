@@ -76,7 +76,7 @@
     padding: 10px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    border-radius: 50px;
  }
  .btn-sheet-product{
     background-color: #27871C !important;
